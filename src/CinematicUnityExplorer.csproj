@@ -346,4 +346,18 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\..\Games\NIGHT-RUNNERS PROLOGUE 1.139\BepInEx\interop\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>..\..\..\..\Games\NIGHT-RUNNERS PROLOGUE 1.139\BepInEx\interop\Assembly-CSharp-firstpass.dll</HintPath>
+    </Reference>
+    <Reference Include="Rewired_Core">
+      <HintPath>..\..\..\..\Games\NIGHT-RUNNERS PROLOGUE 1.139\BepInEx\interop\Rewired_Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Rewired_Windows">
+      <HintPath>..\..\..\..\Games\NIGHT-RUNNERS PROLOGUE 1.139\BepInEx\interop\Rewired_Windows.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@ using UniverseLib.UI;
 using UniverseLib.UI.Models;
 using System.Runtime.InteropServices;
 using CinematicUnityExplorer.Cinematic;
+using CinematicUnityExplorer.NightRunners.Utils;
 
 #if UNHOLLOWER
 using UnhollowerRuntimeLib;
@@ -139,6 +140,7 @@ namespace UnityExplorer.UI.Panels
                     usingGameCamera = true;
                     ourCamera = lastMainCamera;
                     MaybeToggleCinemachine(false);
+                    RCCUtils.ToggleRCC(ourCamera, false);
 
                     // If the farClipPlaneValue is the default one try to use the one from the gameplay camera
                     if (farClipPlaneValue == 2000){
@@ -195,6 +197,7 @@ namespace UnityExplorer.UI.Panels
             {
 
                 MaybeToggleCinemachine(true);
+                RCCUtils.ToggleRCC(ourCamera, true);
                 ourCamera = null;
 
                 if (lastMainCamera)
