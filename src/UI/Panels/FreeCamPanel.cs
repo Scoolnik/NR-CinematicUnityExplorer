@@ -68,6 +68,7 @@ namespace UnityExplorer.UI.Panels
         static InputFieldRef moveSpeedInput;
         static Text followObjectLabel;
         static ButtonRef inspectButton;
+        static ButtonRef followPlayerCarButton;
         public static Toggle followRotationToggle;
         static bool disabledCinemachine;
 
@@ -392,6 +393,11 @@ namespace UnityExplorer.UI.Panels
             UIFactory.SetLayoutElement(releaseFollowButton.GameObject, minWidth: 150, minHeight: 25, flexibleWidth: 9999);
             releaseFollowButton.OnClick += ReleaseFollowButton_OnClick;
 
+            followPlayerCarButton = UIFactory.CreateButton(ContentRoot, "FollowPlayerCarButton", "Follow Car");
+            UIFactory.SetLayoutElement(followPlayerCarButton.GameObject, minWidth: 150, minHeight: 25, flexibleWidth: 9999);
+            followPlayerCarButton.OnClick += FollowPlayerCar;
+            //followPlayerCarButton.GameObject.SetActive(false);
+
             GameObject followRotationGameObject = UIFactory.CreateToggle(ContentRoot, "followRotationToggle", out followRotationToggle, out Text followRotationText);
             UIFactory.SetLayoutElement(followRotationGameObject, minHeight: 25, flexibleWidth: 9999);
             followRotationToggle.isOn = false;
@@ -501,6 +507,26 @@ namespace UnityExplorer.UI.Panels
         void FollowButton_OnClick()
         {
             MouseInspector.Instance.StartInspect(MouseInspectMode.World, FollowObjectAction);
+        }
+
+        void FollowPlayerCar()
+        {
+            try
+            {
+                var go = GodConstant.Instance.playerCar.gameObject;
+                if (go)
+                {
+                    FollowObjectAction(go);
+                }
+                else
+                {
+                    Debug.LogWarning("failed to find player car");
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+            }
         }
 
         void ReleaseFollowButton_OnClick()
