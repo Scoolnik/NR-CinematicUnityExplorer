@@ -12,7 +12,7 @@ namespace CinematicUnityExplorer.NightRunners.Utils
             ToggleRCC_UI(enable);
         }
 
-        private static RCC_Camera GetRCC_Camera(Camera camera)
+        public static RCC_Camera GetRCC_Camera(Camera camera)
         {
             return camera.GetComponentInParent(Il2CppType.Of<RCC_Camera>()) as RCC_Camera ??
                 GameObject.Find("MAIN_CAMERA(Clone)").NullCheck()?.GetComponent<RCC_Camera>();

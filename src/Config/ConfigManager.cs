@@ -187,7 +187,7 @@ namespace UnityExplorer.Config
 
             Default_Gameplay_Freecam = new("Default Gameplay Freecam",
                 "Turn this on if you want the default gameplay freecam toggle on the Freecam panel to be on on startup.",
-                false);
+                true);
 
             Pause = new("Pause",
                 "Toggle the pause of the game.",

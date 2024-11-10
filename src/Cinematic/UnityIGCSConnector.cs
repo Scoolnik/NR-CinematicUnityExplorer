@@ -58,10 +58,8 @@ namespace CinematicUnityExplorer.Cinematic
             Marshal.WriteByte(CameraStatus, enabled ? (byte)0x1 : (byte)0x0);
         }
 
-        public void ExecuteCameraCommand(Camera cam)
+        public void ExecuteCameraCommand(Transform transform)
         {
-            var transform = cam.transform;
-
             // Check whether we should go back to the original position despite being active or not
             this.ShouldMoveToOriginalPosition(transform);
 

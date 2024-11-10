@@ -42,6 +42,7 @@ namespace UnityExplorer.UI.Panels
         internal static bool usingGameCamera;
         public static Camera ourCamera;
         public static Camera lastMainCamera;
+        public static Transform CameraContainer;
         internal static FreeCamBehaviour freeCamScript;
         internal static CatmullRom.CatmullRomMover cameraPathMover;
 
@@ -109,17 +110,19 @@ namespace UnityExplorer.UI.Panels
         static void CacheMainCamera()
         {
             Camera currentMain = Camera.main;
+            CameraContainer = RCCUtils.GetRCC_Camera(currentMain).transform;
+
             if (currentMain)
             {
                 lastMainCamera = currentMain;
-                originalCameraPosition = currentMain.transform.position;
-                originalCameraRotation = currentMain.transform.rotation;
+                originalCameraPosition = CameraContainer.position;
+                originalCameraRotation = CameraContainer.rotation;
                 originalCameraFOV = currentMain.fieldOfView;
 
                 if (currentUserCameraPosition == null)
                 {
-                    currentUserCameraPosition = currentMain.transform.position;
-                    currentUserCameraRotation = currentMain.transform.rotation;
+                    currentUserCameraPosition = CameraContainer.position;
+                    currentUserCameraRotation = CameraContainer.rotation;
                 }
             }
             else
@@ -167,16 +170,16 @@ namespace UnityExplorer.UI.Panels
                 ourCamera.gameObject.tag = "MainCamera";
                 GameObject.DontDestroyOnLoad(ourCamera.gameObject);
                 ourCamera.gameObject.hideFlags = HideFlags.HideAndDontSave;
+                CameraContainer = ourCamera.transform;
             }
 
             if (!freeCamScript)
-                freeCamScript = ourCamera.gameObject.AddComponent<FreeCamBehaviour>();
+                freeCamScript = CameraContainer.gameObject.AddComponent<FreeCamBehaviour>();
 
             if (!cameraPathMover)
-                cameraPathMover = ourCamera.gameObject.AddComponent<CatmullRom.CatmullRomMover>();
+                cameraPathMover = CameraContainer.gameObject.AddComponent<CatmullRom.CatmullRomMover>();
 
-            ourCamera.transform.position = (Vector3)currentUserCameraPosition;
-            ourCamera.transform.rotation = (Quaternion)currentUserCameraRotation;
+            CameraContainer.SetPositionAndRotation((Vector3)currentUserCameraPosition, (Quaternion)currentUserCameraRotation);
 
             ourCamera.gameObject.SetActive(true);
             ourCamera.enabled = true;
@@ -202,9 +205,12 @@ namespace UnityExplorer.UI.Panels
 
                 if (lastMainCamera)
                 {
-                    lastMainCamera.transform.position = originalCameraPosition;
-                    lastMainCamera.transform.rotation = originalCameraRotation;
                     lastMainCamera.fieldOfView = originalCameraFOV;
+                }
+
+                if (CameraContainer)
+                {
+                    CameraContainer.SetPositionAndRotation(originalCameraPosition, originalCameraRotation);
                 }
             }
 
@@ -259,7 +265,7 @@ namespace UnityExplorer.UI.Panels
             if (!ourCamera || lastSetCameraPosition == pos)
                 return;
 
-            ourCamera.transform.position = pos;
+			CameraContainer.position = pos;
             lastSetCameraPosition = pos;
         }
 
@@ -274,7 +280,7 @@ namespace UnityExplorer.UI.Panels
             if (connector != null && connector.IsActive)
                 return;
 
-            lastSetCameraPosition = ourCamera.transform.position;
+            lastSetCameraPosition = CameraContainer.position;
             positionInput.Text = ParseUtility.ToStringForInput<Vector3>(lastSetCameraPosition);
         }
 
@@ -621,50 +627,50 @@ namespace UnityExplorer.UI.Panels
 
         // Getters and Setters for camera position and rotation
         public static Vector3 GetCameraPosition(bool isAbsolute = false){
-            if (isAbsolute) return ourCamera.transform.position;
+            if (isAbsolute) return CameraContainer.position;
             if (followObject){
                 if (followRotationToggle.isOn){
-                    return Quaternion.Inverse(followObject.transform.rotation) * (ourCamera.transform.position - followObject.transform.position);
+                    return Quaternion.Inverse(followObject.transform.rotation) * (CameraContainer.position - followObject.transform.position);
                 }
                 else {
-                    return ourCamera.transform.position - followObject.transform.position;
+                    return CameraContainer.position - followObject.transform.position;
                 }
             }
-            return ourCamera.transform.position;
+            return CameraContainer.position;
         }
 
         public static Quaternion GetCameraRotation(bool isAbsolute = false){
-            if (isAbsolute) return ourCamera.transform.rotation;
-            if (followObject && followRotationToggle.isOn) return Quaternion.Inverse(followObjectLastRotation) * ourCamera.transform.rotation;
-            return ourCamera.transform.rotation;
+            if (isAbsolute) return CameraContainer.rotation;
+            if (followObject && followRotationToggle.isOn) return Quaternion.Inverse(followObjectLastRotation) * CameraContainer.rotation;
+            return CameraContainer.rotation;
         }
 
         public static void SetCameraPosition(Vector3 newPosition, bool isAbsolute = false){
             if (isAbsolute){
-                ourCamera.transform.position = newPosition;
+                CameraContainer.position = newPosition;
             }
             else if (followObject){
                 if (followRotationToggle.isOn){
-                    ourCamera.transform.position = followObject.transform.rotation * newPosition + followObject.transform.position;
+                    CameraContainer.position = followObject.transform.rotation * newPosition + followObject.transform.position;
                 }
                 else {
-                    ourCamera.transform.position = newPosition + followObject.transform.position;
+                    CameraContainer.position = newPosition + followObject.transform.position;
                 }
             }
             else {
-                ourCamera.transform.position = newPosition;
+                CameraContainer.position = newPosition;
             }
         }
 
         public static void SetCameraRotation(Quaternion newRotation, bool isAbsolute = false){
             if (isAbsolute){
-                ourCamera.transform.rotation = newRotation;
+                CameraContainer.rotation = newRotation;
             }
             else if (followObject && followRotationToggle.isOn){
-                ourCamera.transform.rotation = followObjectLastRotation * newRotation;
+                CameraContainer.rotation = followObjectLastRotation * newRotation;
             }
             else {
-                ourCamera.transform.rotation = newRotation;
+                CameraContainer.rotation = newRotation;
             }
         }
     }
@@ -689,7 +695,7 @@ namespace UnityExplorer.UI.Panels
                     FreeCamPanel.EndFreecam();
                     return;
                 }
-                Transform transform = FreeCamPanel.ourCamera.transform;
+                Transform transform = FreeCamPanel.CameraContainer;
 
                 if (!FreeCamPanel.blockFreecamMovementToggle.isOn && !FreeCamPanel.cameraPathMover.playingPath && FreeCamPanel.connector?.IsActive != true) {
                     ProcessInput();
@@ -703,15 +709,14 @@ namespace UnityExplorer.UI.Panels
                         // rotation update
                         Quaternion deltaRotation = FreeCamPanel.followObject.transform.rotation * Quaternion.Inverse(FreeCamPanel.followObjectLastRotation);
                         Vector3 offset = transform.position - FreeCamPanel.followObject.transform.position;
-                        transform.position = transform.position - offset + deltaRotation * offset;
-                        transform.rotation = deltaRotation * transform.rotation;
+                        transform.SetPositionAndRotation(transform.position - offset + deltaRotation * offset, deltaRotation * transform.rotation);
                     }
 
                     FreeCamPanel.followObjectLastPosition = FreeCamPanel.followObject.transform.position;
                     FreeCamPanel.followObjectLastRotation = FreeCamPanel.followObject.transform.rotation;
                 }
 
-                FreeCamPanel.connector?.ExecuteCameraCommand(FreeCamPanel.ourCamera);
+                FreeCamPanel.connector?.ExecuteCameraCommand(transform);
 
                 FreeCamPanel.UpdatePositionInput();
             }
