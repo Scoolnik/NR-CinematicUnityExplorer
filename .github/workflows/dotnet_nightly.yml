@@ -1,0 +1,55 @@
+name: Build CinematicUnityExplorer (Nightly)
+
+# Controls when the action will run.
+on:
+  push:
+    branches: [development]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build_dotnet:
+    runs-on: windows-latest
+    if: "!contains(github.event.head_commit.message, '-noci')"
+
+    steps:
+      # Setup
+
+      - name: Checkout latest
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Checkout private tools
+        uses: actions/checkout@v4
+        with:
+            repository: ${{ secrets.NR_INTEROP_REPO }}
+            token: ${{ secrets.NR_INTEROP_TOKEN }}
+            path: NR_INTEROP
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "6.x"
+       
+      - name: Cache UniverseLib
+        id: cache-universe-lib-build
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-universe-lib
+        with:
+          path: ./UniverseLib/Release
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('.git\modules\UniverseLib\HEAD') }}
+      
+      - if: ${{ steps.cache-universe-lib-build.outputs.cache-hit != 'true' }}
+        name: Build UniverseLib
+        working-directory: ./UniverseLib
+        run: dotnet build src\UniverseLib.sln -c Release_IL2CPP_Interop_BIE
+      
+      - name: Build UE
+        run: ./build_nightly.ps1
+
+      #  Upload artifacts
+      - name: Upload BepInEx.Unity.IL2CPP.CoreCLR
+        uses: actions/upload-artifact@v4
+        with:
+          name: CinematicUnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR.zip
+          path: ./Release/CinematicUnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR/output
