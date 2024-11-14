@@ -96,6 +96,7 @@ namespace UnityExplorer.UI.Panels
             inFreeCamMode = true;
             connector?.UpdateFreecamStatus(true);
 
+            RCCUtils.ToggleGameUI(false);
             previousMousePosition = IInputManager.MousePosition;
 
             CacheMainCamera();
@@ -112,7 +113,7 @@ namespace UnityExplorer.UI.Panels
         static void CacheMainCamera()
         {
             Camera currentMain = Camera.main;
-            CameraContainer = RCCUtils.GetRCC_Camera(currentMain).transform;
+            CameraContainer = RCCUtils.GetCameraContainer(currentMain).transform;
 
             if (currentMain)
             {
@@ -145,7 +146,7 @@ namespace UnityExplorer.UI.Panels
                     usingGameCamera = true;
                     ourCamera = lastMainCamera;
                     MaybeToggleCinemachine(false);
-                    RCCUtils.ToggleRCC(ourCamera, false);
+                    RCCUtils.ToggleCameraController(CameraContainer.gameObject, false);
 
                     // If the farClipPlaneValue is the default one try to use the one from the gameplay camera
                     if (farClipPlaneValue == 2000){
@@ -198,11 +199,10 @@ namespace UnityExplorer.UI.Panels
             inFreeCamMode = false;
             connector?.UpdateFreecamStatus(false);
 
+            RCCUtils.ToggleGameUI(true);
             if (usingGameCamera)
             {
-
                 MaybeToggleCinemachine(true);
-                RCCUtils.ToggleRCC(ourCamera, true);
                 ourCamera = null;
 
                 if (lastMainCamera)
@@ -212,6 +212,7 @@ namespace UnityExplorer.UI.Panels
 
                 if (CameraContainer)
                 {
+                    RCCUtils.ToggleCameraController(CameraContainer.gameObject, true);
                     CameraContainer.SetPositionAndRotation(originalCameraPosition, originalCameraRotation);
                 }
             }

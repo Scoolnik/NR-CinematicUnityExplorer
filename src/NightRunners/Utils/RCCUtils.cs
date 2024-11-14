@@ -6,21 +6,62 @@ namespace CinematicUnityExplorer.NightRunners.Utils
 {
     public static class RCCUtils
     {
-        public static void ToggleRCC(Camera camera, bool enable)
+        public static void ToggleCameraController(GameObject container, bool enable)
         {
-            ToggleRCC_Camera(camera, enable);
+            if (IsPlayerCameraScene())
+            {
+                TogglePersonController(container, enable);
+            }
+            else
+            {
+                ToggleRCC_Camera(container, enable);
+            }
+        }
+
+        public static void ToggleGameUI(bool enable)
+        {
             ToggleRCC_UI(enable);
         }
 
-        public static RCC_Camera GetRCC_Camera(Camera camera)
+        public static GameObject GetCameraContainer(Camera camera)
         {
-            return camera.GetComponentInParent(Il2CppType.Of<RCC_Camera>()) as RCC_Camera ??
-                GameObject.Find("MAIN_CAMERA(Clone)").NullCheck()?.GetComponent<RCC_Camera>();
+            var scene = GodConstant.Instance.scene_currentType;
+            if (scene == GodConstant.Scene_currentType.GARAGE)
+            {
+                return GameObject.Find("homeGarage_player(Clone)");
+            }
+            else if (scene == GodConstant.Scene_currentType.MEETSPOT)
+            {
+                return GameObject.Find("walkScene_player(Clone)");
+            }
+            else
+            {
+                return camera.GetComponentInParent(Il2CppType.Of<RCC_Camera>()).gameObject.NullCheck() ?? GameObject.Find("MAIN_CAMERA(Clone)");
+            }
         }
 
-        private static void ToggleRCC_Camera(Camera camera, bool enable)
+
+        private static RCC_Camera GetRCC_Camera(GameObject container)
         {
-            var rcc = GetRCC_Camera(camera);
+            return container.NullCheck()?.GetComponent<RCC_Camera>();
+        }
+
+        private static void TogglePersonController(GameObject container, bool enable)
+        {
+            var controller = container.GetComponent<FPEFirstPersonController>();
+            if (controller)
+            {
+                controller.enabled = enable;
+            } 
+            else
+            {
+                Debug.LogWarning("FPEFirstPersonController not found ");
+            }
+        }
+
+        private static void ToggleRCC_Camera(GameObject container, bool enable)
+        {
+            var rcc = GetRCC_Camera(container);
             if (rcc)
             {
                 if (!enable)
@@ -49,6 +90,12 @@ namespace CinematicUnityExplorer.NightRunners.Utils
             {
                 Debug.LogWarning("Rcc ui canvas not found");
             }
+        }
+
+        private static bool IsPlayerCameraScene()
+        {
+            var scene = GodConstant.Instance.scene_currentType;
+            return scene == GodConstant.Scene_currentType.GARAGE || scene == GodConstant.Scene_currentType.MEETSPOT;
         }
     }
 }
