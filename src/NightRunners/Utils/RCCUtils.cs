@@ -52,6 +52,11 @@ namespace CinematicUnityExplorer.NightRunners.Utils
             if (controller)
             {
                 controller.enabled = enable;
+                if (controller.homegarage)
+                {
+                    controller.homegarage.noInput = !enable;
+                }
+                GodConstant.Instance.UI_Data.ui_showWarning = !enable; //prevents user interactions on meetspot
             } 
             else
             {
