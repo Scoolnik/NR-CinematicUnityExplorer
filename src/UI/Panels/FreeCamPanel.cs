@@ -687,6 +687,7 @@ namespace UnityExplorer.UI.Panels
             else {
                 CameraContainer.position = newPosition;
             }
+            lastKnownPosition = CameraContainer.position;
         }
 
         public static void SetCameraRotation(Quaternion newRotation, bool isAbsolute = false){
