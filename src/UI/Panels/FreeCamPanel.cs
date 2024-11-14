@@ -85,6 +85,7 @@ namespace UnityExplorer.UI.Panels
         public static GameObject followObject = null;
         public static Vector3 followObjectLastPosition = Vector3.zero;
         public static Quaternion followObjectLastRotation = Quaternion.identity;
+        public static Vector3 lastKnownPosition = Vector3.zero;
 
         private static FreecamCursorUnlocker freecamCursorUnlocker = null;
 
@@ -723,13 +724,21 @@ namespace UnityExplorer.UI.Panels
                 }
                 Transform transform = FreeCamPanel.CameraContainer;
 
+                var inputDelta = Vector3.zero;
                 if (!FreeCamPanel.blockFreecamMovementToggle.isOn && !FreeCamPanel.cameraPathMover.playingPath && FreeCamPanel.connector?.IsActive != true) {
-                    ProcessInput();
+                    inputDelta = ProcessInput();
                 }
 
-                if (FreeCamPanel.followObject != null){          
+                if (FreeCamPanel.followObject != null){
                     // position update
-                    transform.position += FreeCamPanel.followObject.transform.position - FreeCamPanel.followObjectLastPosition;
+                    var positionDelta = FreeCamPanel.followObject.transform.position - FreeCamPanel.followObjectLastPosition;
+
+                    if (FreeCamPanel.lastKnownPosition != Vector3.zero)
+                    {
+                        //TODO: check delta
+                        positionDelta -= transform.position - (FreeCamPanel.lastKnownPosition + inputDelta);
+                    }
+                    transform.position += positionDelta;
 
                     if (FreeCamPanel.followRotationToggle.isOn){
                         // rotation update
@@ -745,10 +754,12 @@ namespace UnityExplorer.UI.Panels
                 FreeCamPanel.connector?.ExecuteCameraCommand(transform);
 
                 FreeCamPanel.UpdatePositionInput();
+
+                FreeCamPanel.lastKnownPosition = FreeCamPanel.followObject ? transform.position : Vector3.zero;
             }
         }
 
-        internal void ProcessInput(){
+        internal Vector3 ProcessInput(){
             FreeCamPanel.currentUserCameraPosition = transform.position;
             FreeCamPanel.currentUserCameraRotation = transform.rotation;
 
@@ -761,24 +772,26 @@ namespace UnityExplorer.UI.Panels
                 speedModifier = 0.1f;
 
             moveSpeed *= speedModifier;
+            
+            var delta = Vector3.zero;
 
             if (IInputManager.GetKey(ConfigManager.Left_1.Value) || IInputManager.GetKey(ConfigManager.Left_2.Value))
-                transform.position += transform.right * -1 * moveSpeed;
+                delta += transform.right * -1 * moveSpeed;
 
             if (IInputManager.GetKey(ConfigManager.Right_1.Value) || IInputManager.GetKey(ConfigManager.Right_2.Value))
-                transform.position += transform.right * moveSpeed;
+                delta += transform.right * moveSpeed;
 
             if (IInputManager.GetKey(ConfigManager.Forwards_1.Value) || IInputManager.GetKey(ConfigManager.Forwards_2.Value))
-                transform.position += transform.forward * moveSpeed;
+                delta += transform.forward * moveSpeed;
 
             if (IInputManager.GetKey(ConfigManager.Backwards_1.Value) || IInputManager.GetKey(ConfigManager.Backwards_2.Value))
-                transform.position += transform.forward * -1 * moveSpeed;
+                delta += transform.forward * -1 * moveSpeed;
 
             if (IInputManager.GetKey(ConfigManager.Up.Value))
-                transform.position += transform.up * moveSpeed;
+                delta += transform.up * moveSpeed;
 
             if (IInputManager.GetKey(ConfigManager.Down.Value))
-                transform.position += transform.up * -1 * moveSpeed;
+                delta += transform.up * -1 * moveSpeed;
 
             if (IInputManager.GetKey(ConfigManager.Tilt_Left.Value))
                 transform.Rotate(0, 0, moveSpeed * 10, Space.Self);
@@ -840,6 +853,8 @@ namespace UnityExplorer.UI.Panels
             }
 
             FreeCamPanel.previousMousePosition = IInputManager.MousePosition;
+            transform.position += delta;
+            return delta;
         }
     }
 
