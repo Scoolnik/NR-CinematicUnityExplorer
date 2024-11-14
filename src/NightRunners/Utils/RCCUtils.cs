@@ -57,6 +57,11 @@ namespace CinematicUnityExplorer.NightRunners.Utils
                     controller.homegarage.noInput = !enable;
                 }
                 GodConstant.Instance.UI_Data.ui_showWarning = !enable; //prevents user interactions on meetspot
+                var vCamera = controller.transform.Find("vCamera");
+                if (vCamera) 
+                { 
+                    vCamera.transform.localPosition = enable ? new Vector3(0, 0.85f, 0) : Vector3.zero; //direct camera GO parent
+                }
             } 
             else
             {
