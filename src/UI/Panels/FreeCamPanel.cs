@@ -67,8 +67,8 @@ namespace UnityExplorer.UI.Panels
         static InputFieldRef positionInput;
         static InputFieldRef moveSpeedInput;
         static Text followObjectLabel;
+        static Text lookAtObjectLabel;
         static ButtonRef inspectButton;
-        static ButtonRef followPlayerCarButton;
         public static Toggle followRotationToggle;
         static bool disabledCinemachine;
 
@@ -86,6 +86,8 @@ namespace UnityExplorer.UI.Panels
         public static Vector3 followObjectLastPosition = Vector3.zero;
         public static Quaternion followObjectLastRotation = Quaternion.identity;
         public static Vector3 lastKnownPosition = Vector3.zero;
+
+        public static GameObject lookAtObject = null;
 
         private static FreecamCursorUnlocker freecamCursorUnlocker = null;
 
@@ -395,11 +397,10 @@ namespace UnityExplorer.UI.Panels
             UIFactory.SetLayoutElement(releaseFollowButton.GameObject, minWidth: 150, minHeight: 25, flexibleWidth: 9999);
             releaseFollowButton.OnClick += ReleaseFollowButton_OnClick;
 
-            followPlayerCarButton = UIFactory.CreateButton(ContentRoot, "FollowPlayerCarButton", "Follow Car");
+            var followPlayerCarButton = UIFactory.CreateButton(ContentRoot, "FollowPlayerCarButton", "Follow Car");
             UIFactory.SetLayoutElement(followPlayerCarButton.GameObject, minWidth: 150, minHeight: 25, flexibleWidth: 9999);
             followPlayerCarButton.OnClick += FollowPlayerCar;
-            //followPlayerCarButton.GameObject.SetActive(false);
-
+            
             GameObject followRotationGameObject = UIFactory.CreateToggle(ContentRoot, "followRotationToggle", out followRotationToggle, out Text followRotationText);
             UIFactory.SetLayoutElement(followRotationGameObject, minHeight: 25, flexibleWidth: 9999);
             followRotationToggle.isOn = false;
@@ -417,6 +418,25 @@ namespace UnityExplorer.UI.Panels
                     CamPathsPanel.MaybeRedrawPath();
                 }
             });
+
+            AddSpacer(5);
+
+            lookAtObjectLabel = UIFactory.CreateLabel(ContentRoot, "CurrentLookAtObject", "Not looking at any object.");
+            UIFactory.SetLayoutElement(lookAtObjectLabel.gameObject, minWidth: 100, minHeight: 25);
+
+            GameObject lookAtObjectRow = UIFactory.CreateHorizontalGroup(ContentRoot, "LookAtObjectRow", false, false, true, true, 3, default, new(1, 1, 1, 0));
+
+            ButtonRef lookAtButton = UIFactory.CreateButton(lookAtObjectRow, "LookAtButton", "Look at GameObject");
+            UIFactory.SetLayoutElement(lookAtButton.GameObject, minWidth: 150, minHeight: 25, flexibleWidth: 9999);
+            lookAtButton.OnClick += LookAtButton_OnClick;
+
+            ButtonRef releaseLookAtButton = UIFactory.CreateButton(lookAtObjectRow, "ReleaseLookAtButton", "Release Look at GameObject");
+            UIFactory.SetLayoutElement(releaseLookAtButton.GameObject, minWidth: 150, minHeight: 25, flexibleWidth: 9999);
+            releaseLookAtButton.OnClick += ReleaseLookAtButton_OnClick;
+
+            var lookAtPlayerCarButton = UIFactory.CreateButton(ContentRoot, "LookAtPlayerCarButton", "Look at Car");
+            UIFactory.SetLayoutElement(lookAtPlayerCarButton.GameObject, minWidth: 150, minHeight: 25, flexibleWidth: 9999);
+            lookAtPlayerCarButton.OnClick += LookAtPlayerCar;
 
             AddSpacer(5);
 
@@ -544,6 +564,49 @@ namespace UnityExplorer.UI.Panels
             CamPathsPanel.TranslatePointsToGlobal(followRotationToggle.isOn);
 
             CamPathsPanel.UpdatedFollowObject(null);
+        }
+
+        public static void LookAtObjectAction(GameObject obj)
+        {
+            lookAtObject = obj;
+            lookAtObjectLabel.text = $"Looking at: {obj.name}";
+        }
+
+        void LookAtButton_OnClick()
+        {
+            MouseInspector.Instance.StartInspect(MouseInspectMode.World, LookAtObjectAction);
+            followRotationToggle.interactable = false;
+            followRotationToggle.isOn = false;
+        }
+
+        void LookAtPlayerCar()
+        {
+            try
+            {
+                var go = GodConstant.Instance.playerCar.gameObject;
+                if (go)
+                {
+                    LookAtObjectAction(go);
+                }
+                else
+                {
+                    Debug.LogWarning("failed to find player car");
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+            }
+        }
+
+        void ReleaseLookAtButton_OnClick()
+        {
+            followRotationToggle.interactable = true;
+            if (lookAtObject)
+            {
+                lookAtObject = null;
+                lookAtObjectLabel.text = "Not looking at any object";
+            }
         }
 
         static void SetToggleButtonState()
@@ -751,6 +814,11 @@ namespace UnityExplorer.UI.Panels
 
                     FreeCamPanel.followObjectLastPosition = FreeCamPanel.followObject.transform.position;
                     FreeCamPanel.followObjectLastRotation = FreeCamPanel.followObject.transform.rotation;
+                }
+
+                if (FreeCamPanel.lookAtObject != null && !FreeCamPanel.cameraPathMover.playingPath)
+                {
+                    transform.LookAt(FreeCamPanel.lookAtObject.transform);
                 }
 
                 FreeCamPanel.connector?.ExecuteCameraCommand(transform);

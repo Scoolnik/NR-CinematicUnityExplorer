@@ -295,6 +295,11 @@ namespace UnityExplorer.UI.Widgets
             UIFactory.SetLayoutElement(FollowObjectButton.Component.gameObject, minHeight: 25, minWidth: 100);
             FollowObjectButton.OnClick += () => FreeCamPanel.FollowObjectAction(this.Target.gameObject);
 
+            var lookAtObjectButton = UIFactory.CreateButton(firstRow, "LookAtObjectButton", "Look at object with Freecam", new Color(0.2f, 0.2f, 0.2f));
+            lookAtObjectButton.ButtonText.fontSize = 13;
+            UIFactory.SetLayoutElement(lookAtObjectButton.Component.gameObject, minHeight: 25, minWidth: 100);
+            lookAtObjectButton.OnClick += () => FreeCamPanel.LookAtObjectAction(this.Target.gameObject);
+
             this.PathInput = UIFactory.CreateInputField(firstRow, "PathInput", "...");
             PathInput.Component.textComponent.color = Color.grey;
             PathInput.Component.textComponent.fontSize = 14;
