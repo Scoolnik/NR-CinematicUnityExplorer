@@ -61,6 +61,7 @@ namespace CinematicUnityExplorer.NightRunners.Utils
                 if (vCamera) 
                 { 
                     vCamera.transform.localPosition = enable ? new Vector3(0, 0.85f, 0) : Vector3.zero; //direct camera GO parent
+                    vCamera.transform.localRotation = Quaternion.identity;
                 }
             } 
             else
