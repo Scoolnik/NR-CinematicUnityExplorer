@@ -1,6 +1,6 @@
 ﻿using CinematicUnityExplorer.NightRunners.Extensions;
 using Il2CppInterop.Runtime;
-using UnityEngine;
+using Rewired;
 
 namespace CinematicUnityExplorer.NightRunners.Utils
 {
@@ -40,6 +40,22 @@ namespace CinematicUnityExplorer.NightRunners.Utils
             }
         }
 
+        public static void SetDefaultInputEnabled(bool enable)
+        {
+            try
+            {
+                ReInput.controllers.Keyboard.enabled = enable;
+                var joysticks = ReInput.controllers.GetJoysticks();
+                foreach (var joystick in joysticks)
+                {
+                    joystick.enabled = enable;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"{e.Message}\n{e.StackTrace}");
+            }
+        }
 
         private static RCC_Camera GetRCC_Camera(GameObject container)
         {
@@ -49,6 +65,7 @@ namespace CinematicUnityExplorer.NightRunners.Utils
         private static void TogglePersonController(GameObject container, bool enable)
         {
             var controller = container.GetComponent<FPEFirstPersonController>();
+            GodConstant.Instance.UI_Data.ui_showWarning = !enable; //prevents user interactions on meetspot
             if (controller)
             {
                 controller.enabled = enable;
@@ -56,7 +73,6 @@ namespace CinematicUnityExplorer.NightRunners.Utils
                 {
                     controller.homegarage.noInput = !enable;
                 }
-                GodConstant.Instance.UI_Data.ui_showWarning = !enable; //prevents user interactions on meetspot
                 var vCamera = controller.transform.Find("vCamera");
                 if (vCamera) 
                 { 

@@ -99,6 +99,10 @@ namespace UnityExplorer.UI.Panels
             connector?.UpdateFreecamStatus(true);
 
             RCCUtils.ToggleGameUI(false);
+            if (blockGamesInputOnFreecamToggle.isOn)
+            {
+                RCCUtils.SetDefaultInputEnabled(false);
+            }
             previousMousePosition = IInputManager.MousePosition;
 
             CacheMainCamera();
@@ -202,6 +206,8 @@ namespace UnityExplorer.UI.Panels
             connector?.UpdateFreecamStatus(false);
 
             RCCUtils.ToggleGameUI(true);
+            RCCUtils.SetDefaultInputEnabled(true);
+
             if (usingGameCamera)
             {
                 MaybeToggleCinemachine(true);
@@ -340,6 +346,12 @@ namespace UnityExplorer.UI.Panels
                 UIFactory.SetLayoutElement(blockGamesInputOnFreecam, minHeight: 25, flexibleWidth: 9999);
                 blockGamesInputOnFreecamToggle.isOn = true;
                 blockGamesInputOnFreecamText.text = "Block games input on Freecam";
+                blockGamesInputOnFreecamToggle.onValueChanged.AddListener(blockInput => {
+                    if (inFreeCamMode)
+                    {
+                        RCCUtils.SetDefaultInputEnabled(!blockInput);
+                    }
+                });
             }
 
             AddSpacer(5);
