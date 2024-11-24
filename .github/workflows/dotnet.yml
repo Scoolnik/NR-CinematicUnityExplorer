@@ -16,96 +16,43 @@ jobs:
       # Setup
 
       - name: Checkout latest
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
-      - name: Setup dotnet
-        uses: actions/setup-dotnet@v3
+
+      - name: Checkout private tools
+        uses: actions/checkout@v4
         with:
-          dotnet-version: '6.x'
+          repository: ${{ secrets.NR_INTEROP_REPO }}
+          token: ${{ secrets.NR_INTEROP_TOKEN }}
+          path: NR_INTEROP
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "6.x"
       # Run build script
       - name: Build UE
         run: ./build.ps1
 
       #  Upload artifacts
-      - name: Upload BepInEx.IL2CPP
-        uses: actions/upload-artifact@v3
-        with:
-          name: CinematicUnityExplorer.BepInEx.IL2CPP.zip
-          path: ./Release/CinematicUnityExplorer.BepInEx.IL2CPP/
-
-      - name: Upload BepInEx.IL2CPP.CoreCLR
-        uses: actions/upload-artifact@v3
-        with:
-          name: CinematicUnityExplorer.BepInEx.IL2CPP.CoreCLR.zip
-          path: ./Release/CinematicUnityExplorer.BepInEx.IL2CPP.CoreCLR/
-
       - name: Upload BepInEx.Unity.IL2CPP.CoreCLR
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: CinematicUnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR.zip
-          path: ./Release/CinematicUnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR/
-
-      - name: Upload BepInEx5.Mono
-        uses: actions/upload-artifact@v3
-        with:
-          name: CinematicUnityExplorer.BepInEx5.Mono.zip
-          path: ./Release/CinematicUnityExplorer.BepInEx5.Mono/
-
-      - name: Upload BepInEx6.Mono
-        uses: actions/upload-artifact@v3
-        with:
-          name: CinematicUnityExplorer.BepInEx6.Mono.zip
-          path: ./Release/CinematicUnityExplorer.BepInEx6.Mono/
-
-      - name: Upload BepInEx6.Unity.Mono
-        uses: actions/upload-artifact@v3
-        with:
-          name: CinematicUnityExplorer.BepInEx6.Unity.Mono.zip
-          path: ./Release/CinematicUnityExplorer.BepInEx6.Unity.Mono/
+          path: ./Release/CinematicUnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR/output
 
       - name: Upload MelonLoader.IL2CPP
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: CinematicUnityExplorer.MelonLoader.IL2CPP.zip
-          path: ./Release/CinematicUnityExplorer.MelonLoader.IL2CPP/
-
-      - name: Upload MelonLoader.IL2CPP.net6preview
-        uses: actions/upload-artifact@v3
-        with:
-          name: CinematicUnityExplorer.MelonLoader.IL2CPP.net6preview.zip
-          path: ./Release/CinematicUnityExplorer.MelonLoader.IL2CPP.net6preview/
+          path: ./Release/CinematicUnityExplorer.MelonLoader.IL2CPP/output
 
       - name: Upload MelonLoader.IL2CPP.CoreCLR
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: CinematicUnityExplorer.MelonLoader.IL2CPP.CoreCLR.zip
-          path: ./Release/CinematicUnityExplorer.MelonLoader.IL2CPP.CoreCLR/
-
-      - name: Upload MelonLoader.Mono
-        uses: actions/upload-artifact@v3
-        with:
-          name: CinematicUnityExplorer.MelonLoader.Mono.zip
-          path: ./Release/CinematicUnityExplorer.MelonLoader.Mono/
-
-      - name: Upload Standalone.IL2CPP
-        uses: actions/upload-artifact@v3
-        with:
-          name: CinematicUnityExplorer.Standalone.IL2CPP.zip
-          path: ./Release/CinematicUnityExplorer.Standalone.IL2CPP/
-
-      - name: Upload Standalone.Mono
-        uses: actions/upload-artifact@v3
-        with:
-          name: CinematicUnityExplorer.Standalone.Mono.zip
-          path: ./Release/CinematicUnityExplorer.Standalone.Mono/
-
-      - name: Upload Editor
-        uses: actions/upload-artifact@v3
-        with:
-          name: CinematicUnityExplorer.Editor.zip
-          path: ./UnityEditorPackage/
-          
+          path: ./Release/CinematicUnityExplorer.MelonLoader.IL2CPP.CoreCLR/output
 
   build_connector:
     runs-on: windows-latest
@@ -113,7 +60,7 @@ jobs:
 
     steps:
       - name: Checkout latest
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -127,13 +74,13 @@ jobs:
         run: ./build_connector.ps1
 
       - name: Upload Unity IGCS Connector
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: UnityIGCSConnector.dll
           path: ./Release/UnityIGCSConnector.dll
 
       - name: Upload Unity IGCS Connector 32bit
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: UnityIGCSConnector.32.dll
           path: ./Release/UnityIGCSConnector.32.dll
