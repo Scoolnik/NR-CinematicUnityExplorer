@@ -1,8 +1,8 @@
-# Cinematic Unity Explorer
+# Cinematic Unity Explorer Adapted for <b>Night-Runners</b>
 
-<p align="center">
-Adapted for <b>Night-Runners</b>.
-</p>
+<h3 align="center">
+Discord modding community server: <a href="https://discord.gg/nightrunners-modding-community-1197987467593252894">click</a>
+</h3>
 
 <p align="center">
   <img align="center" src="img/icon.png" width="300" height="300">
