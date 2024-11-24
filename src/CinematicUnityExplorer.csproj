@@ -16,7 +16,7 @@
   </PropertyGroup>
 
 
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(IS_CI)'!='true'">
     <ItemGroup Condition="'$(Configuration)'=='ML_Cpp_net6' or '$(Configuration)'=='ML_Cpp_net472' or '$(Configuration)'=='STANDALONE_Cpp' or '$(Configuration)'=='BIE_Cpp'">
       <Exec Command="dotnet build ..\UniverseLib\src\UniverseLib.sln -c Release_IL2CPP_Unhollower" />
     </ItemGroup>
@@ -346,4 +346,45 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
+  <Choose>
+      <When Condition="'$(IS_CI)'=='true'">
+          <ItemGroup>
+              <Reference Include="Assembly-CSharp">
+                  <HintPath>..\NR_INTEROP\Assembly-CSharp.dll</HintPath>
+              </Reference>
+              <Reference Include="Assembly-CSharp-firstpass">
+                  <HintPath>..\NR_INTEROP\Assembly-CSharp-firstpass.dll</HintPath>
+              </Reference>
+              <Reference Include="Rewired_Core">
+                  <HintPath>..\NR_INTEROP\Rewired_Core.dll</HintPath>
+              </Reference>
+              <Reference Include="Rewired_Windows">
+                  <HintPath>..\NR_INTEROP\Rewired_Windows.dll</HintPath>
+              </Reference>
+          </ItemGroup>
+      </When>
+      <Otherwise>
+          <ItemGroup>
+              <Reference Include="Assembly-CSharp">
+                  <HintPath>..\..\..\..\Games\NIGHT-RUNNERS PROLOGUE 1.139\BepInEx\interop\Assembly-CSharp.dll</HintPath>
+              </Reference>
+              <Reference Include="Assembly-CSharp-firstpass">
+                  <HintPath>..\..\..\..\Games\NIGHT-RUNNERS PROLOGUE 1.139\BepInEx\interop\Assembly-CSharp-firstpass.dll</HintPath>
+              </Reference>
+              <Reference Include="Rewired_Core">
+                  <HintPath>..\..\..\..\Games\NIGHT-RUNNERS PROLOGUE 1.139\BepInEx\interop\Rewired_Core.dll</HintPath>
+              </Reference>
+              <Reference Include="Rewired_Windows">
+                  <HintPath>..\..\..\..\Games\NIGHT-RUNNERS PROLOGUE 1.139\BepInEx\interop\Rewired_Windows.dll</HintPath>
+              </Reference>
+          </ItemGroup>
+      </Otherwise>
+  </Choose>
+  
+  <!--This tells the compiler to not include referenced assemblies in the output folder.-->
+  <ItemDefinitionGroup>
+      <Reference>
+          <Private>False</Private>
+      </Reference>
+  </ItemDefinitionGroup>
 </Project>

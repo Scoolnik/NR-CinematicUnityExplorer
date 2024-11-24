@@ -6,6 +6,7 @@ using UniverseLib.UI;
 using UniverseLib.UI.Models;
 using System.Runtime.InteropServices;
 using CinematicUnityExplorer.Cinematic;
+using CinematicUnityExplorer.NightRunners.Utils;
 
 #if UNHOLLOWER
 using UnhollowerRuntimeLib;
@@ -41,6 +42,7 @@ namespace UnityExplorer.UI.Panels
         internal static bool usingGameCamera;
         public static Camera ourCamera;
         public static Camera lastMainCamera;
+        public static Transform CameraContainer;
         internal static FreeCamBehaviour freeCamScript;
         internal static CatmullRom.CatmullRomMover cameraPathMover;
 
@@ -65,6 +67,7 @@ namespace UnityExplorer.UI.Panels
         static InputFieldRef positionInput;
         static InputFieldRef moveSpeedInput;
         static Text followObjectLabel;
+        static Text lookAtObjectLabel;
         static ButtonRef inspectButton;
         public static Toggle followRotationToggle;
         static bool disabledCinemachine;
@@ -82,6 +85,9 @@ namespace UnityExplorer.UI.Panels
         public static GameObject followObject = null;
         public static Vector3 followObjectLastPosition = Vector3.zero;
         public static Quaternion followObjectLastRotation = Quaternion.identity;
+        public static Vector3 lastKnownPosition = Vector3.zero;
+
+        public static GameObject lookAtObject = null;
 
         private static FreecamCursorUnlocker freecamCursorUnlocker = null;
 
@@ -92,6 +98,11 @@ namespace UnityExplorer.UI.Panels
             inFreeCamMode = true;
             connector?.UpdateFreecamStatus(true);
 
+            RCCUtils.ToggleGameUI(false);
+            if (blockGamesInputOnFreecamToggle.isOn)
+            {
+                RCCUtils.SetDefaultInputEnabled(false);
+            }
             previousMousePosition = IInputManager.MousePosition;
 
             CacheMainCamera();
@@ -108,17 +119,19 @@ namespace UnityExplorer.UI.Panels
         static void CacheMainCamera()
         {
             Camera currentMain = Camera.main;
+            CameraContainer = RCCUtils.GetCameraContainer(currentMain).transform;
+
             if (currentMain)
             {
                 lastMainCamera = currentMain;
-                originalCameraPosition = currentMain.transform.position;
-                originalCameraRotation = currentMain.transform.rotation;
+                originalCameraPosition = CameraContainer.position;
+                originalCameraRotation = CameraContainer.rotation;
                 originalCameraFOV = currentMain.fieldOfView;
 
                 if (currentUserCameraPosition == null)
                 {
-                    currentUserCameraPosition = currentMain.transform.position;
-                    currentUserCameraRotation = currentMain.transform.rotation;
+                    currentUserCameraPosition = CameraContainer.position;
+                    currentUserCameraRotation = CameraContainer.rotation;
                 }
             }
             else
@@ -139,6 +152,7 @@ namespace UnityExplorer.UI.Panels
                     usingGameCamera = true;
                     ourCamera = lastMainCamera;
                     MaybeToggleCinemachine(false);
+                    RCCUtils.ToggleCameraController(CameraContainer.gameObject, false);
 
                     // If the farClipPlaneValue is the default one try to use the one from the gameplay camera
                     if (farClipPlaneValue == 2000){
@@ -165,16 +179,16 @@ namespace UnityExplorer.UI.Panels
                 ourCamera.gameObject.tag = "MainCamera";
                 GameObject.DontDestroyOnLoad(ourCamera.gameObject);
                 ourCamera.gameObject.hideFlags = HideFlags.HideAndDontSave;
+                CameraContainer = ourCamera.transform;
             }
 
             if (!freeCamScript)
-                freeCamScript = ourCamera.gameObject.AddComponent<FreeCamBehaviour>();
+                freeCamScript = CameraContainer.gameObject.AddComponent<FreeCamBehaviour>();
 
             if (!cameraPathMover)
-                cameraPathMover = ourCamera.gameObject.AddComponent<CatmullRom.CatmullRomMover>();
+                cameraPathMover = CameraContainer.gameObject.AddComponent<CatmullRom.CatmullRomMover>();
 
-            ourCamera.transform.position = (Vector3)currentUserCameraPosition;
-            ourCamera.transform.rotation = (Quaternion)currentUserCameraRotation;
+            CameraContainer.SetPositionAndRotation((Vector3)currentUserCameraPosition, (Quaternion)currentUserCameraRotation);
 
             ourCamera.gameObject.SetActive(true);
             ourCamera.enabled = true;
@@ -191,17 +205,23 @@ namespace UnityExplorer.UI.Panels
             inFreeCamMode = false;
             connector?.UpdateFreecamStatus(false);
 
+            RCCUtils.ToggleGameUI(true);
+            RCCUtils.SetDefaultInputEnabled(true);
+
             if (usingGameCamera)
             {
-
                 MaybeToggleCinemachine(true);
                 ourCamera = null;
 
                 if (lastMainCamera)
                 {
-                    lastMainCamera.transform.position = originalCameraPosition;
-                    lastMainCamera.transform.rotation = originalCameraRotation;
                     lastMainCamera.fieldOfView = originalCameraFOV;
+                }
+
+                if (CameraContainer)
+                {
+                    RCCUtils.ToggleCameraController(CameraContainer.gameObject, true);
+                    CameraContainer.SetPositionAndRotation(originalCameraPosition, originalCameraRotation);
                 }
             }
 
@@ -256,7 +276,7 @@ namespace UnityExplorer.UI.Panels
             if (!ourCamera || lastSetCameraPosition == pos)
                 return;
 
-            ourCamera.transform.position = pos;
+			CameraContainer.position = pos;
             lastSetCameraPosition = pos;
         }
 
@@ -271,7 +291,7 @@ namespace UnityExplorer.UI.Panels
             if (connector != null && connector.IsActive)
                 return;
 
-            lastSetCameraPosition = ourCamera.transform.position;
+            lastSetCameraPosition = CameraContainer.position;
             positionInput.Text = ParseUtility.ToStringForInput<Vector3>(lastSetCameraPosition);
         }
 
@@ -296,7 +316,7 @@ namespace UnityExplorer.UI.Panels
             GameObject toggleObj = UIFactory.CreateToggle(ContentRoot, "UseGameCameraToggle", out useGameCameraToggle, out Text useGameCameraText);
             UIFactory.SetLayoutElement(toggleObj, minHeight: 25, flexibleWidth: 9999);
             useGameCameraToggle.onValueChanged.AddListener(OnUseGameCameraToggled);
-            useGameCameraToggle.isOn = ConfigManager.Default_Gameplay_Freecam.Value;
+            useGameCameraToggle.isOn = true;//ConfigManager.Default_Gameplay_Freecam.Value;
             useGameCameraText.text = "Use Game Camera?";
 
             AddSpacer(5);
@@ -326,6 +346,12 @@ namespace UnityExplorer.UI.Panels
                 UIFactory.SetLayoutElement(blockGamesInputOnFreecam, minHeight: 25, flexibleWidth: 9999);
                 blockGamesInputOnFreecamToggle.isOn = true;
                 blockGamesInputOnFreecamText.text = "Block games input on Freecam";
+                blockGamesInputOnFreecamToggle.onValueChanged.AddListener(blockInput => {
+                    if (inFreeCamMode)
+                    {
+                        RCCUtils.SetDefaultInputEnabled(!blockInput);
+                    }
+                });
             }
 
             AddSpacer(5);
@@ -383,6 +409,10 @@ namespace UnityExplorer.UI.Panels
             UIFactory.SetLayoutElement(releaseFollowButton.GameObject, minWidth: 150, minHeight: 25, flexibleWidth: 9999);
             releaseFollowButton.OnClick += ReleaseFollowButton_OnClick;
 
+            var followPlayerCarButton = UIFactory.CreateButton(ContentRoot, "FollowPlayerCarButton", "Follow Car");
+            UIFactory.SetLayoutElement(followPlayerCarButton.GameObject, minWidth: 150, minHeight: 25, flexibleWidth: 9999);
+            followPlayerCarButton.OnClick += FollowPlayerCar;
+            
             GameObject followRotationGameObject = UIFactory.CreateToggle(ContentRoot, "followRotationToggle", out followRotationToggle, out Text followRotationText);
             UIFactory.SetLayoutElement(followRotationGameObject, minHeight: 25, flexibleWidth: 9999);
             followRotationToggle.isOn = false;
@@ -400,6 +430,25 @@ namespace UnityExplorer.UI.Panels
                     CamPathsPanel.MaybeRedrawPath();
                 }
             });
+
+            AddSpacer(5);
+
+            lookAtObjectLabel = UIFactory.CreateLabel(ContentRoot, "CurrentLookAtObject", "Not looking at any object.");
+            UIFactory.SetLayoutElement(lookAtObjectLabel.gameObject, minWidth: 100, minHeight: 25);
+
+            GameObject lookAtObjectRow = UIFactory.CreateHorizontalGroup(ContentRoot, "LookAtObjectRow", false, false, true, true, 3, default, new(1, 1, 1, 0));
+
+            ButtonRef lookAtButton = UIFactory.CreateButton(lookAtObjectRow, "LookAtButton", "Look at GameObject");
+            UIFactory.SetLayoutElement(lookAtButton.GameObject, minWidth: 150, minHeight: 25, flexibleWidth: 9999);
+            lookAtButton.OnClick += LookAtButton_OnClick;
+
+            ButtonRef releaseLookAtButton = UIFactory.CreateButton(lookAtObjectRow, "ReleaseLookAtButton", "Release Look at GameObject");
+            UIFactory.SetLayoutElement(releaseLookAtButton.GameObject, minWidth: 150, minHeight: 25, flexibleWidth: 9999);
+            releaseLookAtButton.OnClick += ReleaseLookAtButton_OnClick;
+
+            var lookAtPlayerCarButton = UIFactory.CreateButton(ContentRoot, "LookAtPlayerCarButton", "Look at Car");
+            UIFactory.SetLayoutElement(lookAtPlayerCarButton.GameObject, minWidth: 150, minHeight: 25, flexibleWidth: 9999);
+            lookAtPlayerCarButton.OnClick += LookAtPlayerCar;
 
             AddSpacer(5);
 
@@ -494,6 +543,26 @@ namespace UnityExplorer.UI.Panels
             MouseInspector.Instance.StartInspect(MouseInspectMode.World, FollowObjectAction);
         }
 
+        void FollowPlayerCar()
+        {
+            try
+            {
+                var go = GodConstant.Instance.playerCar.gameObject;
+                if (go)
+                {
+                    FollowObjectAction(go);
+                }
+                else
+                {
+                    Debug.LogWarning("failed to find player car");
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+            }
+        }
+
         void ReleaseFollowButton_OnClick()
         {
             if (followObject){
@@ -507,6 +576,49 @@ namespace UnityExplorer.UI.Panels
             CamPathsPanel.TranslatePointsToGlobal(followRotationToggle.isOn);
 
             CamPathsPanel.UpdatedFollowObject(null);
+        }
+
+        public static void LookAtObjectAction(GameObject obj)
+        {
+            lookAtObject = obj;
+            lookAtObjectLabel.text = $"Looking at: {obj.name}";
+        }
+
+        void LookAtButton_OnClick()
+        {
+            MouseInspector.Instance.StartInspect(MouseInspectMode.World, LookAtObjectAction);
+            followRotationToggle.interactable = false;
+            followRotationToggle.isOn = false;
+        }
+
+        void LookAtPlayerCar()
+        {
+            try
+            {
+                var go = GodConstant.Instance.playerCar.gameObject;
+                if (go)
+                {
+                    LookAtObjectAction(go);
+                }
+                else
+                {
+                    Debug.LogWarning("failed to find player car");
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e.Message);
+            }
+        }
+
+        void ReleaseLookAtButton_OnClick()
+        {
+            followRotationToggle.interactable = true;
+            if (lookAtObject)
+            {
+                lookAtObject = null;
+                lookAtObjectLabel.text = "Not looking at any object";
+            }
         }
 
         static void SetToggleButtonState()
@@ -618,50 +730,51 @@ namespace UnityExplorer.UI.Panels
 
         // Getters and Setters for camera position and rotation
         public static Vector3 GetCameraPosition(bool isAbsolute = false){
-            if (isAbsolute) return ourCamera.transform.position;
+            if (isAbsolute) return CameraContainer.position;
             if (followObject){
                 if (followRotationToggle.isOn){
-                    return Quaternion.Inverse(followObject.transform.rotation) * (ourCamera.transform.position - followObject.transform.position);
+                    return Quaternion.Inverse(followObject.transform.rotation) * (CameraContainer.position - followObject.transform.position);
                 }
                 else {
-                    return ourCamera.transform.position - followObject.transform.position;
+                    return CameraContainer.position - followObject.transform.position;
                 }
             }
-            return ourCamera.transform.position;
+            return CameraContainer.position;
         }
 
         public static Quaternion GetCameraRotation(bool isAbsolute = false){
-            if (isAbsolute) return ourCamera.transform.rotation;
-            if (followObject && followRotationToggle.isOn) return Quaternion.Inverse(followObjectLastRotation) * ourCamera.transform.rotation;
-            return ourCamera.transform.rotation;
+            if (isAbsolute) return CameraContainer.rotation;
+            if (followObject && followRotationToggle.isOn) return Quaternion.Inverse(followObjectLastRotation) * CameraContainer.rotation;
+            return CameraContainer.rotation;
         }
 
         public static void SetCameraPosition(Vector3 newPosition, bool isAbsolute = false){
             if (isAbsolute){
-                ourCamera.transform.position = newPosition;
+                CameraContainer.position = newPosition;
             }
             else if (followObject){
                 if (followRotationToggle.isOn){
-                    ourCamera.transform.position = followObject.transform.rotation * newPosition + followObject.transform.position;
+                    CameraContainer.position = followObject.transform.rotation * newPosition + followObject.transform.position;
                 }
                 else {
-                    ourCamera.transform.position = newPosition + followObject.transform.position;
+                    CameraContainer.position = newPosition + followObject.transform.position;
                 }
             }
             else {
-                ourCamera.transform.position = newPosition;
+                CameraContainer.position = newPosition;
             }
+            lastKnownPosition = CameraContainer.position;
         }
 
         public static void SetCameraRotation(Quaternion newRotation, bool isAbsolute = false){
             if (isAbsolute){
-                ourCamera.transform.rotation = newRotation;
+                CameraContainer.rotation = newRotation;
             }
             else if (followObject && followRotationToggle.isOn){
-                ourCamera.transform.rotation = followObjectLastRotation * newRotation;
+                CameraContainer.rotation = followObjectLastRotation * newRotation;
             }
             else {
-                ourCamera.transform.rotation = newRotation;
+                CameraContainer.rotation = newRotation;
             }
         }
     }
@@ -686,35 +799,49 @@ namespace UnityExplorer.UI.Panels
                     FreeCamPanel.EndFreecam();
                     return;
                 }
-                Transform transform = FreeCamPanel.ourCamera.transform;
+                Transform transform = FreeCamPanel.CameraContainer;
 
+                var inputDelta = Vector3.zero;
                 if (!FreeCamPanel.blockFreecamMovementToggle.isOn && !FreeCamPanel.cameraPathMover.playingPath && FreeCamPanel.connector?.IsActive != true) {
-                    ProcessInput();
+                    inputDelta = ProcessInput();
                 }
 
-                if (FreeCamPanel.followObject != null){          
+                if (FreeCamPanel.followObject != null){
                     // position update
-                    transform.position += FreeCamPanel.followObject.transform.position - FreeCamPanel.followObjectLastPosition;
+                    var positionDelta = FreeCamPanel.followObject.transform.position - FreeCamPanel.followObjectLastPosition;
+
+                    if (FreeCamPanel.lastKnownPosition != Vector3.zero)
+                    {
+                        //TODO: check delta
+                        positionDelta -= transform.position - (FreeCamPanel.lastKnownPosition + inputDelta);
+                    }
+                    transform.position += positionDelta;
 
                     if (FreeCamPanel.followRotationToggle.isOn){
                         // rotation update
                         Quaternion deltaRotation = FreeCamPanel.followObject.transform.rotation * Quaternion.Inverse(FreeCamPanel.followObjectLastRotation);
                         Vector3 offset = transform.position - FreeCamPanel.followObject.transform.position;
-                        transform.position = transform.position - offset + deltaRotation * offset;
-                        transform.rotation = deltaRotation * transform.rotation;
+                        transform.SetPositionAndRotation(transform.position - offset + deltaRotation * offset, deltaRotation * transform.rotation);
                     }
 
                     FreeCamPanel.followObjectLastPosition = FreeCamPanel.followObject.transform.position;
                     FreeCamPanel.followObjectLastRotation = FreeCamPanel.followObject.transform.rotation;
                 }
 
-                FreeCamPanel.connector?.ExecuteCameraCommand(FreeCamPanel.ourCamera);
+                if (FreeCamPanel.lookAtObject != null && !FreeCamPanel.cameraPathMover.playingPath)
+                {
+                    transform.LookAt(FreeCamPanel.lookAtObject.transform);
+                }
+
+                FreeCamPanel.connector?.ExecuteCameraCommand(transform);
 
                 FreeCamPanel.UpdatePositionInput();
+
+                FreeCamPanel.lastKnownPosition = FreeCamPanel.followObject ? transform.position : Vector3.zero;
             }
         }
 
-        internal void ProcessInput(){
+        internal Vector3 ProcessInput(){
             FreeCamPanel.currentUserCameraPosition = transform.position;
             FreeCamPanel.currentUserCameraRotation = transform.rotation;
 
@@ -727,24 +854,26 @@ namespace UnityExplorer.UI.Panels
                 speedModifier = 0.1f;
 
             moveSpeed *= speedModifier;
+            
+            var delta = Vector3.zero;
 
             if (IInputManager.GetKey(ConfigManager.Left_1.Value) || IInputManager.GetKey(ConfigManager.Left_2.Value))
-                transform.position += transform.right * -1 * moveSpeed;
+                delta += transform.right * -1 * moveSpeed;
 
             if (IInputManager.GetKey(ConfigManager.Right_1.Value) || IInputManager.GetKey(ConfigManager.Right_2.Value))
-                transform.position += transform.right * moveSpeed;
+                delta += transform.right * moveSpeed;
 
             if (IInputManager.GetKey(ConfigManager.Forwards_1.Value) || IInputManager.GetKey(ConfigManager.Forwards_2.Value))
-                transform.position += transform.forward * moveSpeed;
+                delta += transform.forward * moveSpeed;
 
             if (IInputManager.GetKey(ConfigManager.Backwards_1.Value) || IInputManager.GetKey(ConfigManager.Backwards_2.Value))
-                transform.position += transform.forward * -1 * moveSpeed;
+                delta += transform.forward * -1 * moveSpeed;
 
             if (IInputManager.GetKey(ConfigManager.Up.Value))
-                transform.position += transform.up * moveSpeed;
+                delta += transform.up * moveSpeed;
 
             if (IInputManager.GetKey(ConfigManager.Down.Value))
-                transform.position += transform.up * -1 * moveSpeed;
+                delta += transform.up * -1 * moveSpeed;
 
             if (IInputManager.GetKey(ConfigManager.Tilt_Left.Value))
                 transform.Rotate(0, 0, moveSpeed * 10, Space.Self);
@@ -806,6 +935,8 @@ namespace UnityExplorer.UI.Panels
             }
 
             FreeCamPanel.previousMousePosition = IInputManager.MousePosition;
+            transform.position += delta;
+            return delta;
         }
     }
 

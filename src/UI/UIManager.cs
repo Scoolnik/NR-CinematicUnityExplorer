@@ -1,4 +1,5 @@
-﻿using UnityExplorer.Config;
+﻿using CinematicUnityExplorer.UI.Panels;
+using UnityExplorer.Config;
 using UnityExplorer.CSConsole;
 using UnityExplorer.Inspectors;
 using UnityExplorer.UI.Panels;
@@ -28,6 +29,7 @@ namespace UnityExplorer.UI
             PostProcessingPanel,
             AnimatorPanel,
             Misc,
+            Record
         }
 
         public enum VerticalAnchor
@@ -102,6 +104,7 @@ namespace UnityExplorer.UI
             UIPanels.Add(Panels.PostProcessingPanel, new PostProcessingPanel(UiBase));
             UIPanels.Add(Panels.AnimatorPanel, new AnimatorPanel(UiBase));
             UIPanels.Add(Panels.Misc, new UnityExplorer.UI.Panels.Misc(UiBase));
+            UIPanels.Add(Panels.Record, new RecordPanel(UiBase));
             UIPanels.Add(Panels.Options, new OptionsPanel(UiBase));
             UIPanels.Add(Panels.UIInspectorResults, new MouseInspectorResultsPanel(UiBase));
 

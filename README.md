@@ -1,25 +1,29 @@
-# Cinematic Unity Explorer
+# Cinematic Unity Explorer Adapted for <b>Night-Runners</b>
+
+<h3 align="center">
+Night-Runners Discord modding community server: <a href="https://discord.gg/nightrunners-modding-community-1197987467593252894">click</a>
+</h3>
 
 <p align="center">
-  <img align="center" src="img/icon.png" width="300" height="300">
+  <img align="center" src="img/icon.png" width="200" height="200">
 </p>
 
 <p align="center">
-  🎥 Fork of the excellent UnityExplorer mod made by <a href="https://github.com/sinai-dev">sinai-dev</a> focused on providing tools for creating marketing material for Unity games.
+  🚗 Fork of the excellent CinematicUnityExplorer mod made by <a href="https://github.com/originalnicodr">originalnicodr</a> focused on providing support for Night-Runners game.
 </p>
 <p align="center">
-  To see the forks features I have worked on so far check out the <a href="#features">Features</a> section.
+  🎥 CinematicUnityExplorer is a fork of the excellent UnityExplorer mod made by <a href="https://github.com/sinai-dev">sinai-dev</a> focused on providing tools for creating marketing material for Unity games.
 </p>
 <p align="center">
-  ✔️ Supports most Unity versions from 5.2 to 2021+ (IL2CPP and Mono).
+  To see the forks features we have worked on so far check out the <a href="#features">Features</a> section.
 </p>
 <p align="center">
   ✨ Powered by <a href="https://github.com/yukieiji/UniverseLib">UniverseLib</a>
 </p>
 
-# Releases  [![](https://img.shields.io/github/downloads/originalnicodr/CinematicUnityExplorer/total.svg)](../../releases)
+# Releases [![](https://img.shields.io/github/downloads/Scoolnik/NR-CinematicUnityExplorer/total.svg)](../../releases)
 
-[![](https://img.shields.io/github/release/originalnicodr/CinematicUnityExplorer.svg?label=version)](../../releases/latest) [![](https://img.shields.io/github/actions/workflow/status/originalnicodr/CinematicUnityExplorer/dotnet.yml)](https://github.com/originalnicodr/CinematicUnityExplorer/actions) [![](https://img.shields.io/github/downloads/originalnicodr/CinematicUnityExplorer/latest/total.svg)](../../releases/latest)
+[![](https://img.shields.io/github/release/Scoolnik/NR-CinematicUnityExplorer.svg?label=version)](../../releases/latest) [![](https://img.shields.io/github/actions/workflow/status/Scoolnik/NR-CinematicUnityExplorer/dotnet.yml)](https://github.com/Scoolnik/NR-CinematicUnityExplorer/actions) [![](https://img.shields.io/github/downloads/Scoolnik/NR-CinematicUnityExplorer/latest/total.svg)](../../releases/latest)
 
 <p align="center">
 <a href="https://www.youtube.com/watch?v=--8DOKWzGJ4" target="_blank">
@@ -30,15 +34,15 @@
 
 ## Release schedule
 
-Nightly builds can be found [here](https://github.com/originalnicodr/CinematicUnityExplorer/actions).
+Nightly builds can be found [here](https://github.com/Scoolnik/NR-CinematicUnityExplorer/actions).
+
+Main BepinEx Nightly build: [click](https://nightly.link/Scoolnik/NR-CinematicUnityExplorer/workflows/dotnet_nightly/development/CinematicUnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR.zip)
 
 ## BepInEx
 
-| Release | IL2CPP(CoreCLR) | IL2CPP(Unhollower) | Mono |
-| ------- | ------ |  ------ | ---- |
-| BIE 6.X be.647+ | ✅ [link](https://github.com/originalnicodr/CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR.zip) | ✖️ n/a | ✅ [link](https://github.com/originalnicodr/CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.BepInEx6.Unity.Mono.zip) |
-| BIE 6.X be.472 to be.577 | ✅ [link](https://github.com/originalnicodr/CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.BepInEx.IL2CPP.CoreCLR.zip) | ✅ [link](https://github.com/originalnicodr/CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.BepInEx.IL2CPP.zip)  | ✅ [link](https://github.com/originalnicodr/CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.BepInEx6.Mono.zip) |
-| BIE 5.X | ✖️ n/a |  ✖️ n/a |  ✅ [link](https://github.com/originalnicodr/CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.BepInEx5.Mono.zip) |
+| Release | IL2CPP(CoreCLR) |
+| ------- | ------ |
+| BIE 6.X be.647+ | ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR.zip) |
 
 1. Unzip the release file into a folder
 2. Take the `plugins/CinematicUnityExplorer` folder and place it in `BepInEx/plugins/`
@@ -47,35 +51,18 @@ Nightly builds can be found [here](https://github.com/originalnicodr/CinematicUn
 
 ## MelonLoader
 
-| Release | IL2CPP | Mono |
-| ------- | ------ | ---- |
-| ML 0.6.x  | ✅ [link](https://github.com/originalnicodr/CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.MelonLoader.IL2CPP.CoreCLR.zip) | ✖️ |
-| ML 0.6(only alpha build)  | ✅ [link](https://github.com/originalnicodr/CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.MelonLoader.IL2CPP.net6preview.zip) | ✖️ |
-| ML 0.5  | ✅ [link](https://github.com/originalnicodr/CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.MelonLoader.IL2CPP.zip) | ✅ [link](https://github.com/originalnicodr/CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.MelonLoader.Mono.zip) | 
+| Release | IL2CPP |
+| ------- | ------ |
+| ML 0.6.x  | ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.MelonLoader.IL2CPP.CoreCLR.zip) |
+| ML 0.5  | ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.MelonLoader.IL2CPP.zip) | 
 
 1. Unzip the release file into a folder
 2. Copy the DLL inside the `Mods` folder into your MelonLoader `Mods` folder
 3. Copy all of the DLLs inside the `UserLibs` folder into your MelonLoader `UserLibs` folder
 
-## Standalone
+## Standalone and Unity Editor
 
-| IL2CPP | Mono |
-| ------ | ---- |
-| ✅ [link](https://github.com/originalnicodr/CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.Standalone.IL2CPP.zip) | ✅ [link](https://github.com/originalnicodr/CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.Standalone.Mono.zip) | 
-
-The standalone release can be used with any injector or loader of your choice, but it requires you to load the dependencies manually.
-
-1. Ensure the required libs are loaded - UniverseLib, HarmonyX and MonoMod. Take them from the [`CinematicUnityExplorer.Editor`](https://github.com/originalnicodr/CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.Editor.zip) release if you need them.
-2. For IL2CPP, load Il2CppAssemblyUnhollower and start an [Il2CppAssemblyUnhollower runtime](https://github.com/knah/Il2CppAssemblyUnhollower#required-external-setup)
-2. Load the CinematicUnityExplorer DLL
-3. Create an instance of Unity Explorer with `UnityExplorer.ExplorerStandalone.CreateInstance();`
-4. Optionally subscribe to the `ExplorerStandalone.OnLog` event to handle logging if you wish
-
-## Unity Editor
-
-1. Download the [`CinematicUnityExplorer.Editor`](https://github.com/originalnicodr/CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.Editor.zip) release.
-2. Install the package, either by using the Package Manager and importing the `package.json` file, or by manually dragging the folder into your `Assets` folder.
-3. Drag the `Runtime/CinematicUnityExplorer` prefab into your scene, or create a GameObject and add the `Explorer Editor Behaviour` script to it.
+✖️ n/a, use original [CinematicUnityExplorer](https://github.com/originalnicodr/CinematicUnityExplorer)
 
 # Common issues and solutions
 
@@ -94,7 +81,7 @@ If these fixes do not work, please create an issue in this repo and I'll do my b
 
 # Guide and documentation
 
-I wrote a [guide](https://framedsc.com/GeneralGuides/cinematic-unity-explorer.htm) explaining different things regarding the Cinematic Unity Explorer over the Framed website, from knowing what version to download with your game and troubleshooting, to usage and tips and tricks. Feel free to create a PR on the [Framed GitHub repo](https://github.com/framedsc/Sitesource) if you want to improve it.
+originalnicodr wrote a [guide](https://framedsc.com/GeneralGuides/cinematic-unity-explorer.htm) explaining different things regarding the Cinematic Unity Explorer over the Framed website, from knowing what version to download with your game and troubleshooting, to usage and tips and tricks. Feel free to create a PR on the [Framed GitHub repo](https://github.com/framedsc/Sitesource) if you want to improve it.
 
 # Default Hotkeys
 
@@ -124,9 +111,17 @@ Freeze NPC animations | `Numpad 0`
 
 # Features
 
+NR fork features:
+- "Follow car" button 
+- Hide game ui
+- Disable default camera behaviour when using free cam
+- Move camera container, not camera itself
+
+## The following are features from the original CinematicUnityExplorer project which I have not made myself (text left as is).
+
 The following are the features I developed for this fork. All focused on making things easier for capture artists to get marketing material for studios.
 
-If you found a bug or a problem (or want to see the things I want to work on) head over to the [issues page](https://github.com/originalnicodr/CinematicUnityExplorer/issues).
+If you found a bug or a problem (or want to see the things I want to work on) head over to the [issues page](https://github.com/Scoolnik/NR-CinematicUnityExplorer/issues).
 
 ## Improved Freecam
 
@@ -143,25 +138,28 @@ The original Unity Explorer had a Freecam feature, but even if it was useful at 
 - Blocked rotation from going further when looking directly up or directly down.
 
 ### Follow Object
+
 You can click on the "Follow object" button on the panel and select the object you want the camera to follow or click on the "Follow object" button in the inspector screen for more granularity. This can be used as it is, but it's even more useful when playing with [camera paths](#camera-paths), as you can create a path for the camera to walk relative to the object
 
 By default the camera only follows the object's position, but you can also make it follow its rotation as if the camera was physically bound to the object by checking the "Follow Object Rotation" toggle. Should be useful for mimicking a car camera, a character POV, or creating motion blur.
 
 ### Game input block for Unity's legacy system
+
 Added game input block for Unity's legacy system. You can now block (or unblock) the game's input when using the freecam, as long as the game is using the Unity Legacy Input system. If the game uses a custom solution or the latest Unity system then this won't work. Implementing this for Unity's new system is in the backlog, so if you find a game using it (should say "Initialized new InputSystem support." on the logs) then please let me know so I can implement it using that game!
 
 ## Lights manager
+
 It allows you to spawn spotlights and pointlights, as well as toggle the game's original lights to allow you to relight the scene however you want (a task that is pretty common for screenshots and lighting artists). Please note that this only turns off scene lights and won't turn off ambient light or lights created by emissive materials, effects, or shaders.
 
 <p align="center">
-  <a href="https://raw.githubusercontent.com/originalnicodr/CinematicUnityExplorer/master/img/lights_demo.jpg">
+  <a href="https://raw.githubusercontent.com/Scoolnik/NR-CinematicUnityExplorer/master/img/lights_demo.jpg">
     <img src="img/lights_demo.jpg" />
   </a>
 </p>
 
 You can edit the light parameters by clicking on the "Config" button. There might be a ton of stuff there, but you would want to focus on these properties:
 
-- **Intensity**: How strong the light is. 
+- **Intensity**: How strong the light is.
 - **Range**: How far the light travels.
 - **Color**: Pretty self explanatory.
 - **Color Temperature**: In case you want to use more natural colors. You would also need to enable the `useColorTemperature` property.
@@ -172,9 +170,11 @@ If you want to move an already created light you can use the "Move to Camera" op
 There also is a default intensity input field on the panel. Since the intensity varies a lot from game to game you have to increase/decrease this property on a light until it looks right, and once you figure out a value that works for your game you can write it as the default intensity and don't have to edit it on the new lights you spawn from that point.
 
 ### Visualizer
+
 You can also draw an arrow or sphere representing the light source from spotlights and point lights respectively, to understand your light setups better. To do so click on the "Toggle visualizer" button on a light in the panel.
 
 ## Camera paths
+
 It allows you to create nodes to build camera paths for videos and cinematics. Features include:
 
 - Add and delete camera path nodes.
@@ -192,14 +192,17 @@ It allows you to create nodes to build camera paths for videos and cinematics. F
 As a side note, the mod UI will be disabled once the path starts, to ease video recording.
 
 ### Visualizer
+
 Similarly to the Light Manager, you can visualize a camera path with arrows, whose origin and orientation represent the position and orientation that the camera will have at that point in the curve. You can turn this on by clicking on the "Visualize path" checkbox. Keep in mind that this will be turned off once the path starts playing since its purpose is to help the user set up the path itself.
 
 ## Post-processing panel
+
 It loads all the current vanilla post-processing effects being used and offers togglers to disable them. It also lets you inspect the postprocessing objects yourself if you want to edit their parameters instead.
 
 [Shader toggler](https://github.com/FransBouma/ShaderToggler) would still be preferred (especially as it will be able to catch custom effects that this mod can't), but it might still be useful for some.
 
 ## Animator
+
 Allows you to manually play characters and NPC animations in a scene. This should be pretty useful for getting the right animation on each enemy to set up marketing screenshots.
 
 Favorite animations so they appear first on the dropdown list by clicking on the star button with the animation selected.
@@ -213,6 +216,7 @@ Alongside all of this, you can also open each character game object by clicking 
 For each animator, you can also spawn a Bones Panel. This panel will list all of the character's bones and meshes, and provide easy-to-access toggles to disable them and sliders to move them around, allowing you to pose a character to your liking.
 
 ## Misc Panel
+
 - HUD toggle.
 - Force high LODs toggle. This means that the highest models possible will be forced on all meshes.
 - Screenshot support. Allows you to momentarily render the game at a higher resolution than the one being used and take a screenshot. You can enter the multiplier of the current resolution at which the screenshot should render in the "Supersize" field.
@@ -224,6 +228,7 @@ For each animator, you can also spawn a Bones Panel. This panel will list all of
 - Toggle to change the resolution of shadows generated by the game's vanilla lights. Beware using this one with the two options from above. Also, take in mind that lights created with the Light Manager already generate high-resolution shadows.
 
 ## And more!
+
 - Refactored the pause to make it more reliable.
 - Hotkey to pause the game.
 - Added a slider to the TimeScale.
@@ -234,6 +239,7 @@ For each animator, you can also spawn a Bones Panel. This panel will list all of
 # IGCSDOF Support
 
 The mod also supports [IGCSConnector](https://github.com/FransBouma/IgcsConnector/releases), and therefore [IGCSDOF](https://opm.fransbouma.com/igcsdof.htm), the best modded DOF available. This is an accumulated DOF solution similar to Forza Horizon's or other offline rendering software. This accumulated solution brings some advantages compared to real-time solutions, such as:
+
 - Accurate near-plane bleed.
 - Particle & alpha effects in DOF.
 - Depth-accurate reflections.
@@ -245,11 +251,11 @@ The mod also supports [IGCSConnector](https://github.com/FransBouma/IgcsConnecto
 
 You can download it, read how to install it, and how to use it [here](https://opm.fransbouma.com/igcsdof.htm).
 
->[!IMPORTANT]
-> To be able to use IGCSDOF, besides following the instructions above, make sure to download [UnityIGCSConnector.dll](https://github.com/originalnicodr/CinematicUnityExplorer/releases/latest/download/UnityIGCSConnector.dll) and put it in the same folder as the games .exe.
+> [!IMPORTANT]
+> To be able to use IGCSDOF, besides following the instructions above, make sure to download [UnityIGCSConnector.dll](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/UnityIGCSConnector.dll) and put it in the same folder as the games .exe.
 > This is a necessary middleware so the Reshade add-on can communicate with the mod.
 
->[!IMPORTANT]
+> [!IMPORTANT]
 > Be sure to select `Classic (slower)` mode instead of `Fast`, as the latter one seems to render the image out of focus. However `Fast` might still work in some games.
 
 Huge shout out to [etra0](https://github.com/etra0) for implementing this!
@@ -265,7 +271,7 @@ Maybe I would make a separate version one day, but for now, it is what it is.
 The following are features from the original UnityExplorer project which I have not made myself.
 
 <p align="center">
-  <a href="https://raw.githubusercontent.com/originalnicodr/CinematicUnityExplorer/master/img/preview.png">
+  <a href="https://raw.githubusercontent.com/Scoolnik/NR-CinematicUnityExplorer/master/img/preview.png">
     <img src="img/preview.png" />
   </a>
 </p>
@@ -275,11 +281,13 @@ The following are features from the original UnityExplorer project which I have 
 If you want to inspect an object or Type from outside the C# console, use the `InspectorManager` class:
 
 **To inspect an object:**
+
 ```csharp
 UnityExplorer.InspectorManager.Inspect(theObject);
 ```
 
 **To inspect a Type:**
+
 ```cs
 UnityExplorer.InspectorManager.Inspect(typeof(SomeClass));
 ```
