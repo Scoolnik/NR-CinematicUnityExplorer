@@ -1,15 +1,15 @@
 # Cinematic Unity Explorer Adapted for <b>Night-Runners</b>
 
 <h3 align="center">
-Discord modding community server: <a href="https://discord.gg/nightrunners-modding-community-1197987467593252894">click</a>
+Night-Runners Discord modding community server: <a href="https://discord.gg/nightrunners-modding-community-1197987467593252894">click</a>
 </h3>
 
 <p align="center">
-  <img align="center" src="img/icon.png" width="300" height="300">
+  <img align="center" src="img/icon.png" width="200" height="200">
 </p>
 
 <p align="center">
-  Fork of the excellent CinematicUnityExplorer mod made by <a href="https://github.com/originalnicodr">originalnicodr</a> focused on providing support for Night-Runners game.
+  🚗 Fork of the excellent CinematicUnityExplorer mod made by <a href="https://github.com/originalnicodr">originalnicodr</a> focused on providing support for Night-Runners game.
 </p>
 <p align="center">
   🎥 CinematicUnityExplorer is a fork of the excellent UnityExplorer mod made by <a href="https://github.com/sinai-dev">sinai-dev</a> focused on providing tools for creating marketing material for Unity games.
@@ -18,17 +18,12 @@ Discord modding community server: <a href="https://discord.gg/nightrunners-moddi
   To see the forks features we have worked on so far check out the <a href="#features">Features</a> section.
 </p>
 <p align="center">
-  ✔️ Supports most Unity versions from 5.2 to 2021+ (IL2CPP and Mono).
-</p>
-<p align="center">
   ✨ Powered by <a href="https://github.com/yukieiji/UniverseLib">UniverseLib</a>
 </p>
 
 # Releases [![](https://img.shields.io/github/downloads/Scoolnik/NR-CinematicUnityExplorer/total.svg)](../../releases)
 
 [![](https://img.shields.io/github/release/Scoolnik/NR-CinematicUnityExplorer.svg?label=version)](../../releases/latest) [![](https://img.shields.io/github/actions/workflow/status/Scoolnik/NR-CinematicUnityExplorer/dotnet.yml)](https://github.com/Scoolnik/NR-CinematicUnityExplorer/actions) [![](https://img.shields.io/github/downloads/Scoolnik/NR-CinematicUnityExplorer/latest/total.svg)](../../releases/latest)
-
-Nightly build: https://nightly.link/Scoolnik/NR-CinematicUnityExplorer/workflows/dotnet_nightly/development/CinematicUnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR.zip
 
 <p align="center">
 <a href="https://www.youtube.com/watch?v=--8DOKWzGJ4" target="_blank">
@@ -41,13 +36,13 @@ Nightly build: https://nightly.link/Scoolnik/NR-CinematicUnityExplorer/workflows
 
 Nightly builds can be found [here](https://github.com/Scoolnik/NR-CinematicUnityExplorer/actions).
 
+Main BepinEx Nightly build: [click](https://nightly.link/Scoolnik/NR-CinematicUnityExplorer/workflows/dotnet_nightly/development/CinematicUnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR.zip)
+
 ## BepInEx
 
-| Release | IL2CPP(CoreCLR) | IL2CPP(Unhollower) | Mono |
-| ------- | ------ |  ------ | ---- |
-| BIE 6.X be.647+ | ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR.zip) | ✖️ n/a | ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.BepInEx6.Unity.Mono.zip) |
-| BIE 6.X be.472 to be.577 | ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.BepInEx.IL2CPP.CoreCLR.zip) | ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.BepInEx.IL2CPP.zip)  | ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.BepInEx6.Mono.zip) |
-| BIE 5.X | ✖️ n/a |  ✖️ n/a |  ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.BepInEx5.Mono.zip) |
+| Release | IL2CPP(CoreCLR) |
+| ------- | ------ |
+| BIE 6.X be.647+ | ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR.zip) |
 
 1. Unzip the release file into a folder
 2. Take the `plugins/CinematicUnityExplorer` folder and place it in `BepInEx/plugins/`
@@ -56,35 +51,18 @@ Nightly builds can be found [here](https://github.com/Scoolnik/NR-CinematicUnity
 
 ## MelonLoader
 
-| Release | IL2CPP | Mono |
-| ------- | ------ | ---- |
-| ML 0.6.x  | ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.MelonLoader.IL2CPP.CoreCLR.zip) | ✖️ |
-| ML 0.6(only alpha build)  | ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.MelonLoader.IL2CPP.net6preview.zip) | ✖️ |
-| ML 0.5  | ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.MelonLoader.IL2CPP.zip) | ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.MelonLoader.Mono.zip) | 
+| Release | IL2CPP |
+| ------- | ------ |
+| ML 0.6.x  | ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.MelonLoader.IL2CPP.CoreCLR.zip) |
+| ML 0.5  | ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.MelonLoader.IL2CPP.zip) | 
 
 1. Unzip the release file into a folder
 2. Copy the DLL inside the `Mods` folder into your MelonLoader `Mods` folder
 3. Copy all of the DLLs inside the `UserLibs` folder into your MelonLoader `UserLibs` folder
 
-## Standalone
+## Standalone and Unity Editor
 
-| IL2CPP | Mono |
-| ------ | ---- |
-| ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.Standalone.IL2CPP.zip) | ✅ [link](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.Standalone.Mono.zip) | 
-
-The standalone release can be used with any injector or loader of your choice, but it requires you to load the dependencies manually.
-
-1. Ensure the required libs are loaded - UniverseLib, HarmonyX and MonoMod. Take them from the [`CinematicUnityExplorer.Editor`](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.Editor.zip) release if you need them.
-2. For IL2CPP, load Il2CppAssemblyUnhollower and start an [Il2CppAssemblyUnhollower runtime](https://github.com/knah/Il2CppAssemblyUnhollower#required-external-setup)
-2. Load the CinematicUnityExplorer DLL
-3. Create an instance of Unity Explorer with `UnityExplorer.ExplorerStandalone.CreateInstance();`
-4. Optionally subscribe to the `ExplorerStandalone.OnLog` event to handle logging if you wish
-
-## Unity Editor
-
-1. Download the [`CinematicUnityExplorer.Editor`](https://github.com/Scoolnik/NR-CinematicUnityExplorer/releases/latest/download/CinematicUnityExplorer.Editor.zip) release.
-2. Install the package, either by using the Package Manager and importing the `package.json` file, or by manually dragging the folder into your `Assets` folder.
-3. Drag the `Runtime/CinematicUnityExplorer` prefab into your scene, or create a GameObject and add the `Explorer Editor Behaviour` script to it.
+✖️ n/a, use original [CinematicUnityExplorer](https://github.com/originalnicodr/CinematicUnityExplorer)
 
 # Common issues and solutions
 
