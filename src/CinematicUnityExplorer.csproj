@@ -364,7 +364,7 @@
           </ItemGroup>
       </When>
       <Otherwise>
-          <ItemGroup>
+          <ItemGroup Condition="'$(Configuration)'=='BIE_Cpp_CoreCLR' or '$(Configuration)'=='BIE_Unity_Cpp_CoreCLR'">
               <Reference Include="Assembly-CSharp">
                   <HintPath>..\..\..\..\Games\NIGHT-RUNNERS PROLOGUE 1.139\BepInEx\interop\Assembly-CSharp.dll</HintPath>
               </Reference>
@@ -376,6 +376,21 @@
               </Reference>
               <Reference Include="Rewired_Windows">
                   <HintPath>..\..\..\..\Games\NIGHT-RUNNERS PROLOGUE 1.139\BepInEx\interop\Rewired_Windows.dll</HintPath>
+              </Reference>
+          </ItemGroup>
+		  
+		  <ItemGroup Condition="'$(Configuration)'=='ML_Cpp_CoreCLR'">
+              <Reference Include="Assembly-CSharp">
+                  <HintPath>..\..\..\..\Steam\steamapps\common\NIGHT-RUNNERS PROLOGUE\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
+              </Reference>
+              <Reference Include="Assembly-CSharp-firstpass">
+                  <HintPath>..\..\..\..\Steam\steamapps\common\NIGHT-RUNNERS PROLOGUE\MelonLoader\Il2CppAssemblies\Assembly-CSharp-firstpass.dll</HintPath>
+              </Reference>
+              <Reference Include="Rewired_Core">
+                  <HintPath>..\..\..\..\Steam\steamapps\common\NIGHT-RUNNERS PROLOGUE\MelonLoader\Il2CppAssemblies\Il2CppRewired_Core.dll</HintPath>
+              </Reference>
+              <Reference Include="Rewired_Windows">
+                  <HintPath>..\..\..\..\Steam\steamapps\common\NIGHT-RUNNERS PROLOGUE\MelonLoader\Il2CppAssemblies\Il2CppRewired_Windows.dll</HintPath>
               </Reference>
           </ItemGroup>
       </Otherwise>

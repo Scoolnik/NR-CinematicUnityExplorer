@@ -1,11 +1,10 @@
 ﻿using CinematicUnityExplorer.NightRunners.Extensions;
-#if INTEROP
-using Il2CppInterop.Runtime;
-#else
-using UnhollowerRuntimeLib;
-using UnhollowerBaseLib;
-#endif
+
+#if BIE
 using Rewired;
+#else
+using Il2CppRewired;
+#endif
 
 namespace CinematicUnityExplorer.NightRunners.Utils
 {
