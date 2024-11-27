@@ -25,6 +25,7 @@ namespace CinematicUnityExplorer.NightRunners.Utils
 
         public static void StartReplay()
         {
+            //Crutch. GO created with 'new' keyword intentionally, cause this prop is checked inside replay code logic and it should not be null
             RCC_SceneManager.instance.recorder.carController.externalControllerAI = new RCC_AICarController();
             RCC.StartStopReplay();
         }
