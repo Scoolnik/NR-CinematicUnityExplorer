@@ -25,13 +25,23 @@ namespace CinematicUnityExplorer.UI.Panels
                 minWidth: 150, minHeight: 25, flexibleWidth: 9999
             );
 
-            var recordButton = UIFactory.CreateButton(ContentRoot, "ToggleRecordButton", "Record");
+            var recordButton = UIFactory.CreateButton(ContentRoot, "ToggleRecordButton", "Start Record");
             UIFactory.SetLayoutElement(recordButton.GameObject, minWidth: 150, minHeight: 25, flexibleWidth: 9999);
             recordButton.OnClick += () =>
             {
-                RecordUtils.StartRecord();
                 var mode = RecordUtils.GetMode();
-                recordButton.ButtonText.text = $"{(mode == RCC_Recorder.Mode.Neutral ? "Start" : "Stop")} Record";
+                string nextActionName;
+                if (mode == RCC_Recorder.Mode.Record)
+                {
+                    nextActionName = "Start";
+                }
+                else
+                {
+                    UIManager.ShowMenu = false;
+                    nextActionName = "Stop";
+                }
+                recordButton.ButtonText.text = $"{nextActionName} Record";
+                RecordUtils.StartRecord();
             };
 
             var replayButton = UIFactory.CreateButton(ContentRoot, "ToggleReplayButton", "Replay");
@@ -45,6 +55,7 @@ namespace CinematicUnityExplorer.UI.Panels
                 }
                 else
                 {
+                    UIManager.ShowMenu = false;
                     RecordUtils.StartReplay();
                 }
             };
