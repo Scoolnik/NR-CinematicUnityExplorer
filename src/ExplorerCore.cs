@@ -20,7 +20,7 @@ namespace UnityExplorer
     public static class ExplorerCore
     {
         public const string NAME = "CinematicUnityExplorer";
-        public const string VERSION = "1.2.0.1";
+        public const string VERSION = "1.3.0.1";
         public const string AUTHOR = "originalnicodr, Sinai, yukieiji";
         public const string GUID = "com.originalnicodr.cinematicunityexplorer";
 
@@ -205,6 +205,8 @@ namespace UnityExplorer
             foreach (CanvasScaler scaler in canvasScalers)
             {
                 scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+                scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+                scaler.matchWidthOrHeight = 0f;
             }
         }
     }
