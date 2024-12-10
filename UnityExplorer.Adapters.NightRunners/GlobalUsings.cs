@@ -2,6 +2,10 @@
 
 global using UnityEngine;
 
+#if ML
+global using Il2Cpp;
+#endif
+
 #if INTEROP
 global using Il2CppInterop.Runtime;
 #else

@@ -1,4 +1,4 @@
-﻿using CinematicUnityExplorer.NightRunners.Utils;
+﻿using CinematicUnityExplorer.Adapters.NightRunners.Utils;
 using UnityExplorer.UI;
 using UnityExplorer.UI.Panels;
 using UniverseLib.UI;
@@ -31,7 +31,7 @@ namespace CinematicUnityExplorer.UI.Panels
             {
                 var mode = RecordUtils.GetMode();
                 string nextActionName;
-                if (mode == RCC_Recorder.Mode.Record)
+                if (mode == RecorderMode.Record)
                 {
                     nextActionName = "Start";
                 }
@@ -49,7 +49,7 @@ namespace CinematicUnityExplorer.UI.Panels
             replayButton.OnClick += () =>
             {
                 var mode = RecordUtils.GetMode();
-                if (mode == RCC_Recorder.Mode.Play)
+                if (mode == RecorderMode.Play)
                 {
                     RecordUtils.StopReplay();
                 }

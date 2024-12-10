@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="../common.props" />
+	
+  <PropertyGroup>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<RootNamespace>CinematicUnityExplorer.Adapters.NightRunners</RootNamespace>
+  </PropertyGroup>
+
+
+	<Choose>
+		<When Condition="'$(IS_CI)'=='true'">
+			<ItemGroup>
+				<Reference Include="Assembly-CSharp">
+					<HintPath>..\NR_INTEROP\Assembly-CSharp.dll</HintPath>
+				</Reference>
+				<Reference Include="Assembly-CSharp-firstpass">
+					<HintPath>..\NR_INTEROP\Assembly-CSharp-firstpass.dll</HintPath>
+				</Reference>
+				<Reference Include="Rewired_Core">
+					<HintPath>..\NR_INTEROP\Rewired_Core.dll</HintPath>
+				</Reference>
+				<Reference Include="Rewired_Windows">
+					<HintPath>..\NR_INTEROP\Rewired_Windows.dll</HintPath>
+				</Reference>
+			</ItemGroup>
+		</When>
+		<Otherwise>
+			<ItemGroup Condition="'$(Configuration)'=='BIE_Cpp_CoreCLR' or '$(Configuration)'=='BIE_Unity_Cpp_CoreCLR'">
+				<Reference Include="Assembly-CSharp">
+					<HintPath>..\..\..\..\Games\NIGHT-RUNNERS PROLOGUE 1.139\BepInEx\interop\Assembly-CSharp.dll</HintPath>
+				</Reference>
+				<Reference Include="Assembly-CSharp-firstpass">
+					<HintPath>..\..\..\..\Games\NIGHT-RUNNERS PROLOGUE 1.139\BepInEx\interop\Assembly-CSharp-firstpass.dll</HintPath>
+				</Reference>
+				<Reference Include="Rewired_Core">
+					<HintPath>..\..\..\..\Games\NIGHT-RUNNERS PROLOGUE 1.139\BepInEx\interop\Rewired_Core.dll</HintPath>
+				</Reference>
+				<Reference Include="Rewired_Windows">
+					<HintPath>..\..\..\..\Games\NIGHT-RUNNERS PROLOGUE 1.139\BepInEx\interop\Rewired_Windows.dll</HintPath>
+				</Reference>
+			</ItemGroup>
+
+			<ItemGroup Condition="'$(Configuration)'=='ML_Cpp_CoreCLR'">
+				<Reference Include="Assembly-CSharp">
+					<HintPath>..\..\..\..\Steam\steamapps\common\NIGHT-RUNNERS PROLOGUE\MelonLoader\Il2CppAssemblies\Assembly-CSharp.dll</HintPath>
+				</Reference>
+				<Reference Include="Assembly-CSharp-firstpass">
+					<HintPath>..\..\..\..\Steam\steamapps\common\NIGHT-RUNNERS PROLOGUE\MelonLoader\Il2CppAssemblies\Assembly-CSharp-firstpass.dll</HintPath>
+				</Reference>
+				<Reference Include="Rewired_Core">
+					<HintPath>..\..\..\..\Steam\steamapps\common\NIGHT-RUNNERS PROLOGUE\MelonLoader\Il2CppAssemblies\Il2CppRewired_Core.dll</HintPath>
+				</Reference>
+				<Reference Include="Rewired_Windows">
+					<HintPath>..\..\..\..\Steam\steamapps\common\NIGHT-RUNNERS PROLOGUE\MelonLoader\Il2CppAssemblies\Il2CppRewired_Windows.dll</HintPath>
+				</Reference>
+			</ItemGroup>
+		</Otherwise>
+	</Choose>
+	
+	<ItemDefinitionGroup>
+		<Reference>
+			<Private>False</Private>
+		</Reference>
+	</ItemDefinitionGroup>
+</Project>

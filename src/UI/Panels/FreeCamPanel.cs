@@ -6,7 +6,7 @@ using UniverseLib.UI;
 using UniverseLib.UI.Models;
 using System.Runtime.InteropServices;
 using CinematicUnityExplorer.Cinematic;
-using CinematicUnityExplorer.NightRunners.Utils;
+using CinematicUnityExplorer.Adapters.NightRunners.Utils;
 
 #if UNHOLLOWER
 using UnhollowerRuntimeLib;
@@ -554,7 +554,7 @@ namespace UnityExplorer.UI.Panels
         {
             try
             {
-                var go = GodConstant.Instance.playerCar.gameObject;
+                var go = RCCUtils.GetPlayerCar();
                 if (go)
                 {
                     FollowObjectAction(go);
@@ -602,7 +602,7 @@ namespace UnityExplorer.UI.Panels
         {
             try
             {
-                var go = GodConstant.Instance.playerCar.gameObject;
+                var go = RCCUtils.GetPlayerCar();
                 if (go)
                 {
                     LookAtObjectAction(go);

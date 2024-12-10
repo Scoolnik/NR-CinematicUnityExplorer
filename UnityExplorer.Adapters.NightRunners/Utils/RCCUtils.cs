@@ -1,15 +1,21 @@
-﻿using CinematicUnityExplorer.NightRunners.Extensions;
+﻿using CinematicUnityExplorer.Adapters.NightRunners.Extensions;
 
 #if BIE
 using Rewired;
+
 #else
 using Il2CppRewired;
 #endif
 
-namespace CinematicUnityExplorer.NightRunners.Utils
+namespace CinematicUnityExplorer.Adapters.NightRunners.Utils
 {
     public static class RCCUtils
     {
+        public static GameObject GetPlayerCar()
+        {
+            return GodConstant.Instance.playerCar.gameObject;
+        }
+
         public static void ToggleCameraController(GameObject container, bool enable)
         {
             if (IsPlayerCameraScene())

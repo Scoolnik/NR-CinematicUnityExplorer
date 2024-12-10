@@ -1,4 +1,4 @@
-﻿namespace CinematicUnityExplorer.NightRunners.Extensions
+﻿namespace CinematicUnityExplorer.Adapters.NightRunners.Extensions
 {
     public static class GameObjectExtensions
     {

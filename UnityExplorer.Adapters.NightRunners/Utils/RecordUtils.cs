@@ -1,10 +1,10 @@
-﻿namespace CinematicUnityExplorer.NightRunners.Utils
+﻿namespace CinematicUnityExplorer.Adapters.NightRunners.Utils
 {
     public static class RecordUtils
     {
-        public static RCC_Recorder.Mode GetMode()
+        public static RecorderMode GetMode()
         {
-            return RCC_SceneManager.instance.recorder.mode;
+            return (RecorderMode)RCC_SceneManager.instance.recorder.mode;
         }
 
         public static void StartRecord()
