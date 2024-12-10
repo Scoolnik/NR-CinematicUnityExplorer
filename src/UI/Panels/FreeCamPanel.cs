@@ -19,6 +19,14 @@ namespace UnityExplorer.UI.Panels
 {
     public class FreeCamPanel : UEPanel
     {
+        public enum FreeCameraType
+        {
+            New,
+            Gameplay,
+            Cloned,
+            ForcedMatrix,
+        }
+
         public FreeCamPanel(UIBase owner) : base(owner)
         {
             try {
@@ -723,8 +731,19 @@ namespace UnityExplorer.UI.Panels
             UpdateClippingPlanes();
         }
 
-        public static bool ShouldOverrideInput(){
+        public static bool IsConnectorActive()
+        {
+            return FreeCamPanel.connector != null && FreeCamPanel.connector.IsActive;
+        }
+
+        public static bool ShouldOverrideInput()
+        {
             return inFreeCamMode && blockGamesInputOnFreecamToggle.isOn;
+        }
+
+        public static Camera GetFreecam()
+        {
+            return ourCamera;
         }
 
         // Getters and Setters for camera position and rotation
@@ -774,6 +793,11 @@ namespace UnityExplorer.UI.Panels
             else {
                 CameraContainer.rotation = newRotation;
             }
+        }
+
+        public static void SetFOV(float newFOV)
+        {
+            GetFreecam().fieldOfView = newFOV;
         }
     }
 
