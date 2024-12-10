@@ -11,3 +11,5 @@ lib/ILRepack.exe /target:library /lib:lib/net472/BepInEx/build647+ /lib:lib/net6
 
 # (cleanup and move files)
 Move-Item -Path $Path/UniverseLib.BIE.IL2CPP.Interop.dll -Destination $OutputPath -Force
+Move-Item -Path $Path/CinematicUnityExplorer.Adapters*.dll -Destination $OutputPath -Force
+

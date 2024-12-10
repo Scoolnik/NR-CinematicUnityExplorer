@@ -17,86 +17,86 @@
   <!-- ML IL2CPP Unhollower net6 -->
   <PropertyGroup Condition="'$(Configuration)'=='ML_Cpp_net6'">
     <TargetFramework>net6</TargetFramework>
-    <OutputPath>..\Release\CinematicUnityExplorer.MelonLoader.IL2CPP.net6preview\</OutputPath>
+    <OutputPath>..\Release\$(RootNamespace).MelonLoader.IL2CPP.net6preview\</OutputPath>
     <DefineConstants>CPP,ML,UNHOLLOWER</DefineConstants>
-	  <AssemblyName>CinematicUnityExplorer.ML.IL2CPP.net6preview</AssemblyName>
+	  <AssemblyName>$(RootNamespace).ML.IL2CPP.net6preview</AssemblyName>
   </PropertyGroup>
   <!-- ML IL2CPP net472 (TEMP) -->
   <PropertyGroup Condition="'$(Configuration)'=='ML_Cpp_net472'">
     <TargetFramework>net472</TargetFramework>
-    <OutputPath>..\Release\CinematicUnityExplorer.MelonLoader.IL2CPP\</OutputPath>
+    <OutputPath>..\Release\$(RootNamespace).MelonLoader.IL2CPP\</OutputPath>
     <DefineConstants>CPP,ML,UNHOLLOWER</DefineConstants>
-    <AssemblyName>CinematicUnityExplorer.ML.IL2CPP</AssemblyName>
+    <AssemblyName>$(RootNamespace).ML.IL2CPP</AssemblyName>
   </PropertyGroup>
   <!-- ML IL2CPP CoreCLR -->
   <PropertyGroup Condition="'$(Configuration)'=='ML_Cpp_CoreCLR'">
     <TargetFramework>net6</TargetFramework>
-    <OutputPath>..\Release\CinematicUnityExplorer.MelonLoader.IL2CPP.CoreCLR\</OutputPath>
+    <OutputPath>..\Release\$(RootNamespace).MelonLoader.IL2CPP.CoreCLR\</OutputPath>
     <DefineConstants>CPP,ML,INTEROP</DefineConstants>
-    <AssemblyName>CinematicUnityExplorer.ML.IL2CPP.CoreCLR</AssemblyName>
+    <AssemblyName>$(RootNamespace).ML.IL2CPP.CoreCLR</AssemblyName>
   </PropertyGroup>
   <!-- ML MONO -->
   <PropertyGroup Condition="'$(Configuration)'=='ML_Mono'">
     <TargetFramework>net35</TargetFramework>
-    <OutputPath>..\Release\CinematicUnityExplorer.MelonLoader.Mono\</OutputPath>
+    <OutputPath>..\Release\$(RootNamespace).MelonLoader.Mono\</OutputPath>
     <DefineConstants>MONO,ML</DefineConstants>
-    <AssemblyName>CinematicUnityExplorer.ML.Mono</AssemblyName>
+    <AssemblyName>$(RootNamespace).ML.Mono</AssemblyName>
   </PropertyGroup>
   <!-- BEPINEX IL2CPP -->
   <PropertyGroup Condition="'$(Configuration)'=='BIE_Cpp'">
     <TargetFramework>net472</TargetFramework>
-    <OutputPath>..\Release\CinematicUnityExplorer.BepInEx.IL2CPP\</OutputPath>
+    <OutputPath>..\Release\$(RootNamespace).BepInEx.IL2CPP\</OutputPath>
     <DefineConstants>CPP,BIE,BIE6,UNHOLLOWER</DefineConstants>
-    <AssemblyName>CinematicUnityExplorer.BIE.IL2CPP</AssemblyName>
+    <AssemblyName>$(RootNamespace).BIE.IL2CPP</AssemblyName>
   </PropertyGroup>
   <!-- BEPINEX IL2CPP CoreCLR -->
   <PropertyGroup Condition="'$(Configuration)'=='BIE_Cpp_CoreCLR'">
     <TargetFramework>net6</TargetFramework>
-    <OutputPath>..\Release\CinematicUnityExplorer.BepInEx.IL2CPP.CoreCLR\</OutputPath>
+    <OutputPath>..\Release\$(RootNamespace).BepInEx.IL2CPP.CoreCLR\</OutputPath>
     <DefineConstants>CPP,BIE,BIE6,INTEROP</DefineConstants>
-    <AssemblyName>CinematicUnityExplorer.BIE.IL2CPP.CoreCLR</AssemblyName>
+    <AssemblyName>$(RootNamespace).BIE.IL2CPP.CoreCLR</AssemblyName>
   </PropertyGroup>
   <!-- BEPINEX UNITY IL2CPP CoreCLR -->
   <PropertyGroup Condition="'$(Configuration)'=='BIE_Unity_Cpp_CoreCLR'">
     <TargetFramework>net6</TargetFramework>
-    <OutputPath>..\Release\CinematicUnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR\</OutputPath>
+    <OutputPath>..\Release\$(RootNamespace).BepInEx.Unity.IL2CPP.CoreCLR\</OutputPath>
     <DefineConstants>CPP,BIE,BIE6,BIPUNITY,INTEROP</DefineConstants>
-    <AssemblyName>CinematicUnityExplorer.BIE.Unity.IL2CPP.CoreCLR</AssemblyName>
+    <AssemblyName>$(RootNamespace).BIE.Unity.IL2CPP.CoreCLR</AssemblyName>
   </PropertyGroup>
   <!-- BEPINEX 6 MONO -->
   <PropertyGroup Condition="'$(Configuration)'=='BIE6_Mono'">
     <TargetFramework>net35</TargetFramework>
-    <OutputPath>..\Release\CinematicUnityExplorer.BepInEx6.Mono\</OutputPath>
+    <OutputPath>..\Release\$(RootNamespace).BepInEx6.Mono\</OutputPath>
     <DefineConstants>MONO,BIE,BIE6</DefineConstants>
-    <AssemblyName>CinematicUnityExplorer.BIE6.Mono</AssemblyName>
+    <AssemblyName>$(RootNamespace).BIE6.Mono</AssemblyName>
   </PropertyGroup>
   <!-- BEPINEX 6 Unity MONO -->
   <PropertyGroup Condition="'$(Configuration)'=='BIE6_Unity_Mono'">
     <TargetFramework>net35</TargetFramework>
-    <OutputPath>..\Release\CinematicUnityExplorer.BepInEx6.Unity.Mono\</OutputPath>
+    <OutputPath>..\Release\$(RootNamespace).BepInEx6.Unity.Mono\</OutputPath>
     <DefineConstants>MONO,BIE,BIPUNITY,BIE6</DefineConstants>
-    <AssemblyName>CinematicUnityExplorer.BIE6.Unity.Mono</AssemblyName>
+    <AssemblyName>$(RootNamespace).BIE6.Unity.Mono</AssemblyName>
   </PropertyGroup>
   <!-- BEPINEX 5 MONO -->
   <PropertyGroup Condition="'$(Configuration)'=='BIE5_Mono'">
     <TargetFramework>net35</TargetFramework>
-    <OutputPath>..\Release\CinematicUnityExplorer.BepInEx5.Mono\</OutputPath>
+    <OutputPath>..\Release\$(RootNamespace).BepInEx5.Mono\</OutputPath>
     <DefineConstants>MONO,BIE,BIE5</DefineConstants>
-    <AssemblyName>CinematicUnityExplorer.BIE5.Mono</AssemblyName>
+    <AssemblyName>$(RootNamespace).BIE5.Mono</AssemblyName>
   </PropertyGroup>
   <!-- STANDALONE Mono -->
   <PropertyGroup Condition="'$(Configuration)'=='STANDALONE_Mono'">
     <TargetFramework>net35</TargetFramework>
-    <OutputPath>..\Release\CinematicUnityExplorer.Standalone.Mono\</OutputPath>
+    <OutputPath>..\Release\$(RootNamespace).Standalone.Mono\</OutputPath>
     <DefineConstants>MONO,STANDALONE</DefineConstants>
-    <AssemblyName>CinematicUnityExplorer.STANDALONE.Mono</AssemblyName>
+    <AssemblyName>$(RootNamespace).STANDALONE.Mono</AssemblyName>
   </PropertyGroup>
   <!-- STANDALONE Il2Cpp -->
   <PropertyGroup Condition="'$(Configuration)'=='STANDALONE_Cpp'">
     <TargetFramework>net472</TargetFramework>
-    <OutputPath>..\Release\CinematicUnityExplorer.Standalone.IL2CPP\</OutputPath>
+    <OutputPath>..\Release\$(RootNamespace).Standalone.IL2CPP\</OutputPath>
     <DefineConstants>CPP,STANDALONE,UNHOLLOWER</DefineConstants>
-    <AssemblyName>CinematicUnityExplorer.STANDALONE.IL2CPP</AssemblyName>
+    <AssemblyName>$(RootNamespace).STANDALONE.IL2CPP</AssemblyName>
   </PropertyGroup>
 
   <!-- ~~~~~ NUGET ~~~~~ -->
