@@ -2,17 +2,18 @@ cd UniverseLib
 .\build.ps1
 cd ..
 
-# ----------- MelonLoader IL2CPP CoreCLR (net6) -----------
-# dotnet build src/CinematicUnityExplorer.sln -c Release_ML_Cpp_CoreCLR -p:IS_CI=true
-# $Path = "Release\CinematicUnityExplorer.MelonLoader.IL2CPP.CoreCLR"
+----------- MelonLoader IL2CPP CoreCLR (net6) -----------
+dotnet build src/CinematicUnityExplorer.sln -c Release_ML_Cpp_CoreCLR -p:IS_CI=true
+$Path = "Release\CinematicUnityExplorer.MelonLoader.IL2CPP.CoreCLR"
 
-# New-Item -ItemType Directory -Path "$Path/output/Mods" -Force
-# New-Item -ItemType Directory -Path "$Path/output/UserLibs" -Force
+New-Item -ItemType Directory -Path "$Path/output/Mods" -Force
+New-Item -ItemType Directory -Path "$Path/output/UserLibs" -Force
 
-# # ILRepack
-# lib/ILRepack.exe /target:library /lib:lib/net6 /lib:lib/interop /lib:$Path /internalize /out:$Path/output/Mods/CinematicUnityExplorer.ML.IL2CPP.CoreCLR.dll $Path/CinematicUnityExplorer.ML.IL2CPP.CoreCLR.dll $Path/mcs.dll
+# ILRepack
+lib/ILRepack.exe /target:library /lib:lib/net6 /lib:lib/interop /lib:$Path /internalize /out:$Path/output/Mods/CinematicUnityExplorer.ML.IL2CPP.CoreCLR.dll $Path/CinematicUnityExplorer.ML.IL2CPP.CoreCLR.dll $Path/mcs.dll
 
-# Move-Item -Path $Path/UniverseLib.ML.IL2CPP.Interop.dll -Destination $Path/output/UserLibs -Force
+Move-Item -Path $Path/CinematicUnityExplorer.Adapters*.dll -Destination $Path/output/Mods -Force
+Move-Item -Path $Path/UniverseLib.ML.IL2CPP.Interop.dll -Destination $Path/output/UserLibs -Force
 
 # ----------- BepInEx Unity IL2CPP CoreCLR -----------
 dotnet build src/CinematicUnityExplorer.sln -c Release_BIE_Unity_Cpp -p:IS_CI=true

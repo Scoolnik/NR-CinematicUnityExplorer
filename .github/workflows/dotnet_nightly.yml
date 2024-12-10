@@ -53,3 +53,9 @@ jobs:
         with:
           name: CinematicUnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR.zip
           path: ./Release/CinematicUnityExplorer.BepInEx.Unity.IL2CPP.CoreCLR/output
+          
+      - name: Upload MelonLoader.IL2CPP.CoreCLR
+        uses: actions/upload-artifact@v4
+        with:
+          name: CinematicUnityExplorer.MelonLoader.IL2CPP.CoreCLR.zip
+          path: ./Release/CinematicUnityExplorer.MelonLoader.IL2CPP.CoreCLR/output
