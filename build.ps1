@@ -12,8 +12,9 @@ New-Item -ItemType Directory -Path "$Path/output/UserLibs" -Force
 # ILRepack
 lib/ILRepack.exe /target:library /lib:lib/net6 /lib:lib/interop /lib:$Path /internalize /out:$Path/output/Mods/CinematicUnityExplorer.ML.IL2CPP.CoreCLR.dll $Path/CinematicUnityExplorer.ML.IL2CPP.CoreCLR.dll $Path/mcs.dll
 
-Move-Item -Path $Path/CinematicUnityExplorer.Adapters*.dll -Destination $Path/output/Mods -Force
+Move-Item -Path $Path/CinematicUnityExplorer.Adapters*.dll -Destination $Path/output/UserLibs -Force
 Move-Item -Path $Path/UniverseLib.ML.IL2CPP.Interop.dll -Destination $Path/output/UserLibs -Force
+Copy-Item -Path UnityExplorer.Adapters.NightRunners/lib/melon/*.dll -Destination $Path/output/Mods -Force
 
 # ----------- BepInEx Unity IL2CPP CoreCLR -----------
 dotnet build src/CinematicUnityExplorer.sln -c Release_BIE_Unity_Cpp -p:IS_CI=true
@@ -28,4 +29,4 @@ lib/ILRepack.exe /target:library /lib:lib/net472/BepInEx/build647+ /lib:lib/net6
 # (cleanup and move files)
 Move-Item -Path $Path/UniverseLib.BIE.IL2CPP.Interop.dll -Destination $OutputPath -Force
 Move-Item -Path $Path/CinematicUnityExplorer.Adapters*.dll -Destination $OutputPath -Force
-
+Copy-Item -Path UnityExplorer.Adapters.NightRunners/lib/BepInEx/*.dll -Destination $OutputPath/.. -Force
